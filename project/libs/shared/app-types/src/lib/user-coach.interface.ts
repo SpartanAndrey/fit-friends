@@ -1,5 +1,10 @@
+import { UserLevel } from './user-level.enum';
+import { WorkoutType } from './workout-type.enum';
+
 export interface UserCoach {
-  certificate: string;
-  personalInfo: string;
-  readyToCoach: boolean;
+  level?: UserLevel;
+  workoutType?: WorkoutType[];
+  certificate?: string;
+  coachInfo?: string;
+  isReadyToCoach?: boolean;
 }

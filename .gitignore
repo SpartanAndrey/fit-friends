@@ -5,6 +5,7 @@
 /dist/
 /docs/
 .idea/*
+/db/
 
 .DS_Store
 coverage
