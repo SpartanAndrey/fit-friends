@@ -1,8 +1,8 @@
-import { UserFull, UserGender, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType } from '@project/shared/app-types';
+import { User, UserGender, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType } from '@project/shared/app-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from '../users.constant';
 
-export class UserEntity implements UserFull {
+export class UserEntity implements User {
   public _id?: string;
   public name: string;
   public email: string;
@@ -24,7 +24,7 @@ export class UserEntity implements UserFull {
   public caloriesToSpendNumber?: number;
   public isReadyToTrain?: boolean;
 
-  constructor(user: UserFull) {
+  constructor(user: User) {
     this.fillEntity(user);
   }
 
@@ -32,7 +32,7 @@ export class UserEntity implements UserFull {
     return {...this};
   }
 
-  public fillEntity(user: UserFull) {
+  public fillEntity(user: User) {
     this._id = user._id;
     this.name = user.name;
     this.email = user.email;

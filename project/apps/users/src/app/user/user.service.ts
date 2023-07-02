@@ -4,6 +4,7 @@ import { AUTH_USER_NOT_FOUND } from '../users.constant';
 import { UpdateUserCoachDto } from '../authentication/dto/update-user-coach.dto';
 import { UpdateUserSimpleDto } from '../authentication/dto/update-user-simple.dto';
 import { UserEntity } from './user.entity';
+import { UserQuery } from './query/user.query';
 
 @Injectable()
 export class UserService {
@@ -24,5 +25,9 @@ export class UserService {
 
     const userEntity = new UserEntity({...existUser, ...dto});
     return await this.userRepository.update(id, userEntity);
+  }
+
+  public async getUsers(query: UserQuery){
+    return this.userRepository.find(query);
   }
 }

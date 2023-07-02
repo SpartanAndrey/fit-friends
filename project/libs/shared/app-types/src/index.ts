@@ -21,3 +21,5 @@ export * from './lib/workout-type.enum';
 export * from './lib/order-type.enum';
 export * from './lib/payment-type.enum';
 export * from './lib/request-status.enum';
+export * from './lib/sort-type.enum';
+export * from './lib/sort-direction.enum';

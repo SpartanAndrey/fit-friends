@@ -10,13 +10,13 @@ Content-Type: application/json
 
 {
   "name": "Spartan Spartanych",
-  "email": "sparta@gmail.com",
+  "email": "spar@gmail.com",
   "password": "123456",
   "role": "coach",
   "dateBirth": "2022-02-22",
   "gender": "male",
   "location": "Udelnaya",
-  "level": "amateur",
+  "level": "beginner",
   "workoutType": "boxing",
   "certificate": "certificate1.pdf"
 }
@@ -41,12 +41,14 @@ Authorization: Bearer {{accessToken}}
 
 ###
 
-# Get new JWT pair
-POST {{baseUrl}}/auth/refresh HTTP/1.1
-Authorization: Bearer {{refreshToken}}
+# Get users
+GET {{baseUrl}}/auth?level=amateur&location=Udelnaya HTTP/1.1
 
 ###
 
+# Get new JWT pair
+POST {{baseUrl}}/auth/refresh HTTP/1.1
+Authorization: Bearer {{refreshToken}}
 
 ###
 

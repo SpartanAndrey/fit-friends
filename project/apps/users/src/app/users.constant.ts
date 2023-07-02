@@ -1,4 +1,10 @@
+import { SortType } from '@project/shared/app-types';
+
 export const SALT_ROUNDS = 10;
+
+export const DEFAULT_QUERY_LIMIT = 50;
+export const DEFAULT_SORT_DIRECTION = -1;
+export const DEFAULT_SORT_TYPE = SortType.CreatedAt;
 
 export const MIN_NAME_LENGTH = 1;
 export const MAX_NAME_LENGTH = 15;
@@ -19,6 +25,7 @@ export const AUTH_DESCRIPTION_LENGTH = `User description length shall be between
 export const AUTH_WORKOUT_TYPE_NUMBER = `Workout type number shall be no more than ${MAX_WORKOUT_TYPE_NUMBER}.`;
 export const AUTH_COACH_INFO_LENGTH = `Coach info length shall be between ${MIN_DESCRIPTION_LENGTH} and ${MAX_DESCRIPTION_LENGTH} chars.`;
 export const AUTH_CALORIES_NUMBER = `Calories number shall be between ${MIN_CALORIES_NUMBER} and ${MAX_CALORIES_NUMBER}.`;
+export const QUERY_LIMIT = `The resource does not return more than ${DEFAULT_QUERY_LIMIT} collection items.`
 
 export const AUTH_USER_FORBIDDEN = 'Access is denied.';
 export const AUTH_USER_EXIST = 'User with this email exists.';

@@ -15,6 +15,7 @@ import { createJWTPayload } from '@project/util/util-core';
 import dayjs from 'dayjs';
 import * as crypto from 'node:crypto';
 import { AUTH_USER_EXIST, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from '../users.constant';
+import { UserQuery } from '../user/query/user.query';
 
 
 @Injectable()
@@ -61,9 +62,6 @@ export class AuthenticationService {
     return userEntity.toObject();
   }
 
-  public async getUser(id: string) {
-    return this.userRepository.findById(id);
-  }
 
   public async createUserToken(user: User) {
     const accessTokenPayload = createJWTPayload(user);
@@ -77,17 +75,6 @@ export class AuthenticationService {
         expiresIn: this.jwtOptions.refreshTokenExpiresIn
       })
     }
-  }
-
-  async update(id: string, dto: UpdateUserCoachDto | UpdateUserSimpleDto) {
-    const existUser = await this.userRepository.findById(id);
-
-    if (!existUser) {
-      throw new NotFoundException(AUTH_USER_NOT_FOUND);
-    }
-
-    const userEntity = new UserEntity({...existUser, ...dto});
-    return await this.userRepository.update(id, userEntity);
   }
 
 }

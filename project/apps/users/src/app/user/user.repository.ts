@@ -5,6 +5,7 @@ import { User } from '@project/shared/app-types';
 import { UserModel } from './user.model';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
+import { UserQuery } from './query/user.query';
 
 @Injectable()
 export class UserRepository implements CRUDRepository<UserEntity, string, User> {
@@ -39,9 +40,24 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
       .exec();
   }
 
-  public async find(ids: string[]): Promise<User[] | null> {
+  public async find({limit, sortDirection, sortType, page, role, location, level, workoutType}: UserQuery): Promise<User[] | null> {
+    
+    return this.userModel.find()
+    .where(role ? { role: role } : null)
+    .where(location ? { location: location } : null)
+    .where(level ? { level: level } : null)
+    .where(workoutType ? { workoutType: workoutType } : null)
+    .limit(limit)
+    .skip(page > 0 ? limit * (page - 1) : undefined)
+    .sort({ [sortType]: sortDirection })
+    .exec();
+  }
+
+  /*public async find(ids: string[]): Promise<User[] | null> { //можно использовтаь для поиска спика друзей
     return this.userModel
       .find({ _id: { $in: [...ids]}})
       .exec();
-  }
+  }*/
+
+  //public async find()
 }

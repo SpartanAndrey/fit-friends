@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards, Patch} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards, Patch, Query} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserCoachDto } from './dto/create-user-coach.dto';
 import { CreateUserSimpleDto } from './dto/create-user-simple.dto';
@@ -17,6 +17,7 @@ import { JwtRefreshGuard } from './guards/jwt-refresh.guard';
 import { RequestWithUser, RequestWithTokenPayload } from '@project/shared/app-types';
 import { UserRole } from '@project/shared/app-types';
 import { UserService } from '../user/user.service';
+import { UserQuery } from '../user/query/user.query';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -62,6 +63,7 @@ export class AuthenticationController {
     return this.authService.createUserToken(user);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
@@ -72,6 +74,18 @@ export class AuthenticationController {
     const existUser = await this.userService.getUser(id);
 
     return fillObject(UserRdo, existUser);
+  }
+
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'The users are provided.'
+  })
+  @Get('/')
+  public async index(@Query() query: UserQuery) {
+    const users = await this.userService.getUsers(query);
+
+    return fillObject(UserRdo, users);
   }
 
   @UseGuards(JwtRefreshGuard)
