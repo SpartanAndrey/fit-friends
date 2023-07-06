@@ -1,0 +1,61 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output = "../../../../../node_modules/.prisma/client"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Workout {
+  workoutId      Int        @id @default (autoincrement()) @map("workout_id")
+  title          String     @default("")
+  level          UserLevel
+  type           WorkoutType
+  time           String
+  price          Int
+  caloriesNumber Int 
+  description    String
+  gender         WorkoutGender
+  demonstration  String?
+  rating         Int?       @default(0)
+  coachId        String
+  specialOffer   Boolean
+  createdAt      DateTime   @default(now()) @map("created_at")
+  updatedAt      DateTime   @updatedAt  @map("publish_at")
+  
+  @@map("workouts")
+}
+
+enum UserLevel {
+  Beginner
+  Amateur
+  Professional
+}
+
+enum WorkoutType {
+  Yoga
+  Running
+  Boxing
+  Stretching
+  Crossfit
+  Aerobics
+  Pilates
+}
+
+enum WorkoutTime {
+  Short
+  Average
+  Long
+  ExtraLong
+}
+
+enum WorkoutGender {
+  Men
+  Women
+  Everybody
+}

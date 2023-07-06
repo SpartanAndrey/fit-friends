@@ -1,5 +1,5 @@
 export enum WorkoutGender {
-  Men = 'for men',
-  Women = 'for women',
-  Everybody = 'for everybody',
+  Men = 'Men',
+  Women = 'Women',
+  Everybody = 'Everybody',
 }

@@ -16,6 +16,9 @@
     "baseUrl": ".",
     "paths": {
       "@project/config/config-users": ["libs/config/config-users/src/index.ts"],
+      "@project/models/workouts-models": [
+        "libs/models/workouts-models/src/index.ts"
+      ],
       "@project/shared/app-types": ["libs/shared/app-types/src/index.ts"],
       "@project/shared/shared-pipes": ["libs/shared/shared-pipes/src/index.ts"],
       "@project/util/util-core": ["libs/util/util-core/src/index.ts"],

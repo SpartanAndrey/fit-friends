@@ -17,4 +17,6 @@ export interface Workout {
   rating: number;
   coachId: string;
   specialOffer: boolean;
+  createdAt: Date;
+  updatedAt?: Date;
 }

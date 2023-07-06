@@ -1,5 +1,5 @@
 export enum UserLevel {
-  Beginner = 'beginner',
-  Amateur = 'amateur',
-  Professional = 'professional',
+  Beginner = 'Beginner',
+  Amateur = 'Amateur',
+  Professional = 'Professional',
 }
