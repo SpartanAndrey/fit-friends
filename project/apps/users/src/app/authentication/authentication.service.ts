@@ -2,8 +2,6 @@ import { ConflictException, Inject, Injectable, NotFoundException, UnauthorizedE
 import { CreateUserCoachDto } from './dto/create-user-coach.dto';
 import { CreateUserSimpleDto } from './dto/create-user-simple.dto';
 import { LoginUserDto } from './dto/login-user.dto';
-import { UpdateUserCoachDto } from './dto/update-user-coach.dto';
-import { UpdateUserSimpleDto } from './dto/update-user-simple.dto';
 import { UserEntity } from '../user/user.entity';
 import { UserRepository } from '../user/user.repository';
 import { User } from '@project/shared/app-types';
@@ -15,8 +13,6 @@ import { createJWTPayload } from '@project/util/util-core';
 import dayjs from 'dayjs';
 import * as crypto from 'node:crypto';
 import { AUTH_USER_EXIST, AUTH_USER_NOT_FOUND, AUTH_USER_PASSWORD_WRONG } from '../users.constant';
-import { UserQuery } from '../user/query/user.query';
-
 
 @Injectable()
 export class AuthenticationService {
@@ -37,7 +33,7 @@ export class AuthenticationService {
       throw new ConflictException(AUTH_USER_EXIST);
     }
 
-    const user = {...dto, dateBirth: dayjs(dateBirth).toDate(), passwordHash: ''};
+    const user = {...dto, dateBirth: dayjs(dateBirth).toDate(), passwordHash: '', friends: []};
     
     const userEntity = await new UserEntity(user)
       .setPassword(password)

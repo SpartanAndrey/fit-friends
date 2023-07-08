@@ -23,6 +23,7 @@ export class UserEntity implements User {
   public caloriesToBurnNumber?: number;
   public caloriesToSpendNumber?: number;
   public isReadyToTrain?: boolean;
+  public friends?: string[];
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -53,6 +54,7 @@ export class UserEntity implements User {
     this.caloriesToBurnNumber= user.caloriesToBurnNumber;
     this.caloriesToSpendNumber= user.caloriesToSpendNumber;
     this.isReadyToTrain= user.isReadyToTrain;
+    this.friends = user.friends;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

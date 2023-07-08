@@ -53,11 +53,11 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
     .exec();
   }
 
-  /*public async find(ids: string[]): Promise<User[] | null> { //можно использовтаь для поиска спика друзей
+  public async findFriends(ids: string[], {limit, page}: UserQuery): Promise<User[] | null> {
     return this.userModel
       .find({ _id: { $in: [...ids]}})
+      .limit(limit)
+      .skip(page > 0 ? limit * (page - 1) : undefined)
       .exec();
-  }*/
-
-  //public async find()
+  }
 }

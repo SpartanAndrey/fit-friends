@@ -18,6 +18,7 @@ import { RequestWithUser, RequestWithTokenPayload } from '@project/shared/app-ty
 import { UserRole } from '@project/shared/app-types';
 import { UserService } from '../user/user.service';
 import { UserQuery } from '../user/query/user.query';
+import { ChangeFriendDto } from './dto/change-friend.dto';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -123,5 +124,42 @@ export class AuthenticationController {
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'User\'s friends found.'
+  })
+  @Get(':id/friends')
+  public async indexFriends(@Param('id', MongoidValidationPipe) id: string, @Query() query: UserQuery) {
+    const users = await this.userService.getFriends(id, query);
+
+    return fillObject(UserRdo, users);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.CREATED,
+    description: 'Friend has been successfully added.'
+  })
+  @Patch('/:id/friends/add')
+  async addFriend(@Param('id', MongoidValidationPipe) id: string, @Body() dto: ChangeFriendDto) {
+    const updatedUser = await this.userService.addFriend(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.CREATED,
+    description: 'Friend has been successfully added.'
+  })
+  @Patch('/:id/friends/remove')
+  async removeFriend(@Param('id', MongoidValidationPipe) id: string, @Body() dto: ChangeFriendDto) {
+    const updatedUser = await this.userService.deleteFriend(id, dto);
+    return fillObject(UserRdo, updatedUser);
   }
 }

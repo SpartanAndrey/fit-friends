@@ -16,4 +16,5 @@ export interface User extends UserCoach, UserSimple {
   description?: string;
   location: UserLocation;
   image?: string;
+  friends?: string[]
 }
