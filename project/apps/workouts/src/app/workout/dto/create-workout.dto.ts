@@ -38,7 +38,7 @@ export class CreateWorkoutDto {
 
   @ApiProperty({
     description: 'Одно значение из списка: йога, бег, бокс, стрейчинг, кроссфит, аэробика, пилатес.',
-    example: 'новичок',
+    example: 'бег',
     required: true
   })
   public type: WorkoutType;

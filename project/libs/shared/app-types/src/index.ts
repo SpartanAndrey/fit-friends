@@ -10,6 +10,7 @@ export * from './lib/token-payload.interface';
 export * from './lib/refresh-token-payload.interface';
 export * from './lib/request-with-token-payload';
 export * from './lib/request-with-user';
+export * from './lib/user-balance';
 export * from './lib/token.interface';
 export * from './lib/user-gender.enum';
 export * from './lib/user-level.enum';

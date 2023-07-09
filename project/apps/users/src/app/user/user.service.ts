@@ -1,12 +1,13 @@
 import { ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
-import { AUTH_USER_FRIENDS_EMPTY, AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE } from '../users.constant';
+import { AUTH_USER_FRIENDS_EMPTY, AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE, WORKOUT_NOT_FOUND } from '../users.constant';
 import { UpdateUserCoachDto } from '../authentication/dto/update-user-coach.dto';
 import { UpdateUserSimpleDto } from '../authentication/dto/update-user-simple.dto';
 import { UserEntity } from './user.entity';
 import { UserQuery } from './query/user.query';
 import { UserRole } from '@project/shared/app-types';
 import { ChangeFriendDto } from '../authentication/dto/change-friend.dto';
+import { UpdateBalanceDto } from '../authentication/dto/update-balance.dto';
 
 @Injectable()
 export class UserService {
@@ -118,6 +119,59 @@ export class UserService {
     await this.userRepository.update(existUser._id, userEntity);
     await this.userRepository.update(possibleFriend._id, possibleFriendEntity);
     
+    return existUser;
+  }
+
+  async increaseBalance (id: string, { workoutId, workoutNumber }: UpdateBalanceDto) {
+    const existUser = await this.userRepository.findById(id);
+    const { role, balance } = existUser;
+    
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    if (role !== UserRole.User) {
+      throw new ForbiddenException(AUTH_USER_WRONG_ROLE);
+    }
+
+    const workoutIndex = balance.workouts.findIndex((workout) => workout.id === workoutId);
+
+    if (workoutIndex !== -1) {
+      balance.workouts[workoutIndex].quantity += workoutNumber;
+    } else {
+      balance.workouts.push({ id: workoutId, quantity: workoutNumber });
+    }
+
+    balance.totalWorkoutQuantity += workoutNumber;
+
+    return existUser;
+  }
+
+  async decreaseBalance (id: string, { workoutId }: UpdateBalanceDto) {
+    const existUser = await this.userRepository.findById(id);
+    const { role, balance } = existUser;
+    
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    if (role !== UserRole.User) {
+      throw new ForbiddenException(AUTH_USER_WRONG_ROLE);
+    }
+
+    const workoutIndex = balance.workouts.findIndex((workout) => workout.id === workoutId);
+
+    if (workoutIndex === -1) {
+      throw new NotFoundException(WORKOUT_NOT_FOUND)
+    }
+
+    balance.workouts[workoutIndex].quantity--;
+    balance.totalWorkoutQuantity--;
+
+    if (balance.workouts[workoutIndex].quantity === 0) {
+      balance.workouts.splice(workoutIndex, 1)
+    }
+
     return existUser;
   }
 }

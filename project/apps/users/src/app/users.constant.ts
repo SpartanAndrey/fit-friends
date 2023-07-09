@@ -33,3 +33,4 @@ export const AUTH_USER_NOT_FOUND = 'User not found.';
 export const AUTH_USER_PASSWORD_WRONG = 'User password is wrong.';
 export const AUTH_USER_FRIENDS_EMPTY = 'Friend list is empty';
 export const AUTH_USER_WRONG_ROLE = 'You\'re not simple user.';
+export const WORKOUT_NOT_FOUND = 'Workout is not found.';

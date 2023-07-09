@@ -1,3 +1,4 @@
+import { UserBalance } from './user-balance';
 import { UserCoach } from './user-coach.interface';
 import { UserGender } from './user-gender.enum';
 import { UserLocation } from './user-location.enum';
@@ -17,4 +18,5 @@ export interface User extends UserCoach, UserSimple {
   location: UserLocation;
   image?: string;
   friends?: string[]
+  balance?: UserBalance
 }

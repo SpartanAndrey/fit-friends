@@ -19,6 +19,7 @@ import { UserRole } from '@project/shared/app-types';
 import { UserService } from '../user/user.service';
 import { UserQuery } from '../user/query/user.query';
 import { ChangeFriendDto } from './dto/change-friend.dto';
+import { UpdateBalanceDto } from './dto/update-balance.dto';
 
 @ApiTags('authentication')
 @Controller('auth')
@@ -160,6 +161,30 @@ export class AuthenticationController {
   @Patch('/:id/friends/remove')
   async removeFriend(@Param('id', MongoidValidationPipe) id: string, @Body() dto: ChangeFriendDto) {
     const updatedUser = await this.userService.deleteFriend(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.CREATED,
+    description: 'User balance has been successfully updated.'
+  })
+  @Patch('/:id/balance/add')
+  async incBalance(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateBalanceDto) {
+    const updatedUser = await this.userService.increaseBalance(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.CREATED,
+    description: 'User balance has been successfully updated.'
+  })
+  @Patch('/:id/balance/sub')
+  async decBalance(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateBalanceDto) {
+    const updatedUser = await this.userService.decreaseBalance(id, dto);
     return fillObject(UserRdo, updatedUser);
   }
 }
