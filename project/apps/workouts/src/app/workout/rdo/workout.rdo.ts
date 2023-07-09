@@ -4,12 +4,27 @@ import { UserLevel, WorkoutGender, WorkoutTime, WorkoutType } from '@project/sha
 
 export class WorkoutRdo {
   @ApiProperty({
+    description: 'Уникальный идентификатор тренировки.',
+    example: 300
+  })
+  @Expose({ name: 'workoutId'})
+  public id: number;
+
+  @ApiProperty({
     description: 'Название тренировки. Минимальная длина 1 символ, максимальная длина 15 символов.',
     example: 'Лучшая треня',
     required: true
   })
   @Expose()
   public title: string;
+
+  @ApiProperty({
+    description: 'Фоновая картинка для карточки тренировки. Изображение в формате jpg/png.',
+    example: 'image.png',
+    required: true
+  })
+  @Expose()
+  public backgroundImage: string;
 
   @ApiProperty({
     description: 'Описание тренировки. Минимальная длина 10 символов; максимальная длина 140 символов.',

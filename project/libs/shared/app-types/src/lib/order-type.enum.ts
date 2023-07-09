@@ -1,3 +1,4 @@
 export enum OrderType {
-  Membership = 'membership',
+  Workout = 'Workout',
+  Membership = 'Мembership',
 }

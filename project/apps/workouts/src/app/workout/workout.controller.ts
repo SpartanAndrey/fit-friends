@@ -64,9 +64,9 @@ export class WorkoutController {
     status: HttpStatus.OK,
     description: 'The coach\'s workouts are provided.'
   })
-  @Get('/coach')
-  async indexCoach(@Query() query: WorkoutListQuery) {
-    const workouts = await this.workoutService.getCoachWorkouts(query);
+  @Get('/coach/:coachId')
+  async indexCoach(@Param('coachId') coachId: string, @Query() query: WorkoutListQuery) {
+    const workouts = await this.workoutService.getCoachWorkouts(coachId, query);
     return fillObject(WorkoutRdo, workouts);
   }
 

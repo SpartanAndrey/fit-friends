@@ -4,9 +4,10 @@ import { PrismaModule } from './prisma/prisma.module';
 import { WorkoutController } from './workout/workout.controller';
 import { WorkoutService } from './workout/workout.service';
 import { WorkoutRepository } from './workout/workout.repository';
+import { OrderModule } from './order/order.module';
 
 @Module({
-  imports: [WorkoutModule, PrismaModule],
+  imports: [WorkoutModule, PrismaModule, OrderModule],
   controllers: [WorkoutController],
   providers: [WorkoutService, WorkoutRepository],
   exports: [WorkoutRepository],

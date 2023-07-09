@@ -4,8 +4,9 @@ import { WorkoutTime } from './workout-time.enum';
 import { WorkoutType } from './workout-type.enum';
 
 export interface Workout {
-  _id?: number;
+  id?: number;
   title: string;
+  backgroundImage: string;
   level: UserLevel;
   type: WorkoutType;
   time: WorkoutTime

@@ -3,13 +3,25 @@
 @workoutId = {{workout.response.body.$.id}}
 @userId = {{workout.response.body.$.userId}}
 
-#Create workout
+# Workouts
+# Create workout
 # @name workout
 POST {{baseUrl}}/workouts HTTP/1.1
 Content-Type: application/json
 
 {
-  
+  "title": "Run, Forrest!",
+  "backgroundImage": "training-2.png",
+  "description": "Узнайте правильную технику бега, развивайте выносливость и откройте для себя все секреты длительных пробежек.",
+  "level": "Professional",
+  "type": "Running",
+  "time": "80-100 min",
+  "gender": "Men",
+  "price": 1600,
+  "caloriesNumber": 1500,
+  "demonstration": "crossfit.mp4",
+  "coachId": "F123",
+  "specialOffer": false
 }
 
 ###
@@ -24,7 +36,7 @@ PATCH {{baseUrl}}/workouts/{{workoutId}} HTTP/1.1
 Content-Type: application/json
 
 {
-
+  "caloriesNumber": 2000
 }
 
 ###
@@ -33,3 +45,30 @@ Content-Type: application/json
 GET {{baseUrl}}/workouts?sortDirection=desc&limit=2&page=1 HTTP/1.1
 
 ###
+
+# Get coach workouts
+GET {{baseUrl}}/workouts/coach/F123?sortDirection=desc&limit=2&page=1 HTTP/1.1
+
+###
+
+# Orders
+# Create order
+POST {{baseUrl}}/orders HTTP/1.1
+Content-Type: application/json
+
+{
+  "workoutId": 2,
+  "coachId": "F123",
+  "orderType": "Membership",
+  "workoutPrice": 1000,
+  "quantity": 5,
+  "paymentType": "Visa"
+}
+
+###
+# Get order by ID
+GET {{baseUrl}}/orders/1 HTTP/1.1
+
+###
+# Get coach orders
+GET {{baseUrl}}/orders/coach/F123?quantitySortDirection=desc HTTP/1.1

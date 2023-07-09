@@ -1,6 +1,7 @@
 import { SortType } from '@project/shared/app-types';
 
 export const DEFAULT_QUERY_LIMIT = 50;
+
 export const DEFAULT_SORT_DIRECTION = 'desc';
 export const DEFAULT_SORT_TYPE = SortType.CreatedAt;
 export const DEFAULT_PRICE_NUMBER = 0;
@@ -14,6 +15,7 @@ export const MAX_CALORIES_NUMBER = 5000;
 export const MIN_RATING_NUMBER = 0;
 export const MAX_RATING_NUMBER = 5;
 
+export const WORKOUT_LIMIT_NOT_BE_EXCEEDED = `Query limit value shall no be exceeded ${DEFAULT_QUERY_LIMIT}`;
 export const WORKOUT_TITLE_LENGTH = `Workout title length shall be between ${MIN_TITLE_LENGTH} and ${MAX_TITLE_LENGTH} chars.`;
 export const WORKOUT_DESCRIPTION_LENGTH = `Workout description length shall be between ${MIN_DESCRIPTION_LENGTH} and ${MAX_DESCRIPTION_LENGTH} chars.`;
 export const WORKOUT_CALORIES_NUMBER = `Calories number shall be between ${MIN_CALORIES_NUMBER} and ${MAX_CALORIES_NUMBER}.`;

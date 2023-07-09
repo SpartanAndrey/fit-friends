@@ -12,23 +12,38 @@ datasource db {
 }
 
 model Workout {
-  workoutId      Int        @id @default (autoincrement()) @map("workout_id")
-  title          String     @default("")
-  level          UserLevel
-  type           WorkoutType
-  time           String
-  price          Int
-  caloriesNumber Int 
-  description    String
-  gender         WorkoutGender
-  demonstration  String?
-  rating         Int?       @default(0)
-  coachId        String
-  specialOffer   Boolean
-  createdAt      DateTime   @default(now()) @map("created_at")
-  updatedAt      DateTime   @updatedAt  @map("publish_at")
+  workoutId       Int        @id @default (autoincrement()) @map("workout_id")
+  title           String     @default("")
+  backgroundImage String
+  level           UserLevel
+  type            WorkoutType
+  time            String
+  price           Int
+  caloriesNumber  Int 
+  description     String
+  gender          WorkoutGender
+  demonstration   String?
+  rating          Int?       @default(0)
+  coachId         String
+  specialOffer    Boolean
+  createdAt       DateTime   @default(now()) @map("created_at")
+  updatedAt       DateTime   @updatedAt  @map("publish_at")
   
   @@map("workouts")
+}
+
+model Order {
+  orderId       Int      @id @default(autoincrement())  @map("order_id")
+  workoutId     Int      @map("workout_id")
+  coachId       String   @map("coach_id")
+  orderType     String
+  workoutPrice  Int
+  quantity      Int
+  totalPrice    Int
+  paymentType   PaymentType
+  createdAt     DateTime @default(now())
+
+  @@map("orders")
 }
 
 enum UserLevel {
@@ -58,4 +73,15 @@ enum WorkoutGender {
   Men
   Women
   Everybody
+}
+
+enum OrderType {
+  Workout
+  Membership
+}
+
+enum PaymentType {
+  Visa
+  Mir
+  Umoney
 }

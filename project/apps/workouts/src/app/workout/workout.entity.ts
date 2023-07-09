@@ -3,6 +3,7 @@ import { UserLevel, Workout, WorkoutGender, WorkoutTime, WorkoutType } from '@pr
 export class WorkoutEntity implements Workout{
   public id: number;
   public title: string;
+  public backgroundImage: string;
   public description: string;
   public level: UserLevel;
   public type: WorkoutType;
@@ -23,6 +24,7 @@ export class WorkoutEntity implements Workout{
 
   public fillEntity(workout: Workout) {
     this.title = workout.title;
+    this.backgroundImage = workout.backgroundImage;
     this.description = workout.description;
     this.level = workout.level;
     this.type = workout.type;

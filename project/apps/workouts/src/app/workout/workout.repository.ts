@@ -6,7 +6,6 @@ import { Workout } from '@project/shared/app-types';
 import { WorkoutCatalogQuery } from './query/workout-catalog.query';
 import { WorkoutListQuery } from './query/workout-list.query';
 
-
 @Injectable()
 export class WorkoutRepository implements CRUDRepository<WorkoutEntity, number, Workout> {
   constructor(private readonly prisma: PrismaService) {}
@@ -50,20 +49,23 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, number, 
     
     return this.prisma.workout.findMany({
       where: {
-        type: { in: types },
-        price: {
-          equals: sortDirection === 'free' ? 0 : undefined,
-          lte: priceMax,
-          gte: priceMin,
-        },
-        caloriesNumber: {
-          lte: caloriesMax,
-          gte: caloriesMin,
-        },
-        rating: {
-          lte: ratingMax,
-          gte: ratingMin,
-        }
+        AND: [
+          { type: { in: types } },
+          {price: {
+            equals: sortDirection === 'free' ? 0 : undefined,
+            lte: priceMax,
+            gte: priceMin,
+          }},
+          {caloriesNumber: {
+            lte: caloriesMax,
+            gte: caloriesMin,
+          }},
+          {rating: {
+            lte: ratingMax,
+            gte: ratingMin,
+          }}
+        ],
+        
       },
       take: limit,
       orderBy: [
@@ -73,24 +75,26 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, number, 
     }) as unknown as Workout[];
   }
 
-  public async findCoachWorkouts({limit, sortDirection, sortType, page, types, priceMin, priceMax, caloriesMin, caloriesMax, ratingMin, ratingMax, times}: WorkoutListQuery): Promise<Workout[]> {
-    
+  public async findCoachWorkouts(coachId: string, {limit, sortDirection, sortType, page, types, priceMin, priceMax, caloriesMin, caloriesMax, ratingMin, ratingMax, times}: WorkoutListQuery): Promise<Workout[]> {
     return this.prisma.workout.findMany({
       where: {
-        type: { in: types },
-        time: { in: times },
-        price: {
-          lte: priceMax,
-          gte: priceMin,
-        },
-        caloriesNumber: {
-          lte: caloriesMax,
-          gte: caloriesMin,
-        },
-        rating: {
-          lte: ratingMax,
-          gte: ratingMin,
-        }
+        AND: [
+          { coachId: coachId },
+          { type: { in: types }},
+          {time: { in: times }},
+          {price: {
+            lte: priceMax,
+            gte: priceMin,
+          }},
+          {caloriesNumber: {
+            lte: caloriesMax,
+            gte: caloriesMin,
+          }},
+          {rating: {
+            lte: ratingMax,
+            gte: ratingMin,
+          }},
+        ],
       },
       take: limit,
       orderBy: [

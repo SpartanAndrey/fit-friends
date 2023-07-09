@@ -14,6 +14,13 @@ export class CreateWorkoutDto {
   public title: string;
 
   @ApiProperty({
+    description: 'Фоновая картинка для карточки тренировки. Изображение в формате jpg/png.',
+    example: 'image.png',
+    required: true
+  })
+  public backgroundImage: string;
+
+  @ApiProperty({
     description: 'Описание тренировки. Минимальная длина 10 символов; максимальная длина 140 символов.',
     example: 'Добавить нечего, просто лучшая.',
     required: true
@@ -67,13 +74,6 @@ export class CreateWorkoutDto {
   @Max(MAX_CALORIES_NUMBER, { message: WORKOUT_CALORIES_NUMBER })
   @IsInt()
   public caloriesNumber: number;
-
-  @ApiProperty({
-    description: 'Максимальный размер изображения: 1 мегабайт. Допускаются форматы: jpg, png.',
-    example: 'image.png'
-  })
-  @IsOptional()
-  public image?: string;
 
   @ApiProperty({
     description: 'идео файл с демонстрацией тренировки. Только одно видео; формат видео mov/avi/mp4.',

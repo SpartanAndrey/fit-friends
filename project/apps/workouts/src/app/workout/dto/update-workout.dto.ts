@@ -14,6 +14,13 @@ export class UpdateWorkoutDto {
   public title?: string;
 
   @ApiProperty({
+    description: 'Фоновая картинка для карточки тренировки. Изображение в формате jpg/png.',
+    example: 'image.png',
+  })
+  @IsOptional()
+  public backgroundImage?: string;
+
+  @ApiProperty({
     description: 'Описание тренировки. Минимальная длина 10 символов; максимальная длина 140 символов.',
     example: 'Добавить нечего, просто лучшая.',
   })

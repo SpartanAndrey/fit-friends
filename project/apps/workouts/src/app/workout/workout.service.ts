@@ -7,7 +7,6 @@ import { WorkoutEntity } from './workout.entity';
 import { WorkoutCatalogQuery } from './query/workout-catalog.query';
 import { WorkoutListQuery } from './query/workout-list.query';
 import { WORKOUT_NOT_AUTHOR, WORKOUT_NOT_FOUND } from './workout.constant';
-//import { WorkoutQuery } from './query/workout.query';
 
 @Injectable()
 export class WorkoutService {
@@ -53,7 +52,7 @@ export class WorkoutService {
     return this.workoutRepository.find(query);
   }
 
-  async getCoachWorkouts(query: WorkoutListQuery) {
-    return this.workoutRepository.find(query);
+  async getCoachWorkouts(coachId: string, query: WorkoutListQuery) {
+    return this.workoutRepository.findCoachWorkouts(coachId, query);
   }
 }
