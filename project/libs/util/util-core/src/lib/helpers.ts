@@ -29,3 +29,7 @@ export function parseTime(time: string): TimeAndUnit {
 
   return { value, unit }
 }
+
+export function getRabbitMQConnectionString({user, password, host, port}): string {
+  return `amqp://${user}:${password}@${host}:${port}`;
+}
