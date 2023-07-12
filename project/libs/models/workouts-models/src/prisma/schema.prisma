@@ -62,22 +62,10 @@ enum WorkoutType {
   Pilates
 }
 
-enum WorkoutTime {
-  Short
-  Average
-  Long
-  ExtraLong
-}
-
 enum WorkoutGender {
   Men
   Women
   Everybody
-}
-
-enum OrderType {
-  Workout
-  Membership
 }
 
 enum PaymentType {

@@ -1,0 +1,43 @@
+@baseUrl = http://localhost:3000/api
+@accessToken = {{login.response.body.$.accessToken}}
+@requestId = {{newRequest.response.body.$.id}}
+
+# Login user by email and password
+# @name login
+POST {{baseUrl}}/auth/login HTTP/1.1
+Content-Type: application/json
+
+{
+  "email": "spartanec@gmail.com",
+  "password": "123456"
+}
+
+###
+
+# Create a new request for workout
+# @name newRequest
+POST {{baseUrl}}/requests/create HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "userId": "64a1651fd8f9a13dee6aec19"
+}
+
+###
+
+# Update request for workout
+PATCH  {{baseUrl}}/requests/{{requestId}} HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "status": "Accepted"
+}
+
+###
+
+# Get request for workout by Id
+GET {{baseUrl}}/requests/{{requestId}} HTTP/1.1
+Authorization: Bearer {{accessToken}}
+###

@@ -5,7 +5,7 @@ import { UpdateUserCoachDto } from '../authentication/dto/update-user-coach.dto'
 import { UpdateUserSimpleDto } from '../authentication/dto/update-user-simple.dto';
 import { UserEntity } from './user.entity';
 import { UserQuery } from './query/user.query';
-import { UserRole } from '@project/shared/app-types';
+import { Notification, UserGender, UserRole } from '@project/shared/app-types';
 import { ChangeFriendDto } from '../authentication/dto/change-friend.dto';
 import { UpdateBalanceDto } from '../authentication/dto/update-balance.dto';
 
@@ -17,6 +17,10 @@ export class UserService {
     
   async getUser(id: string) {
     return this.userRepository.findById(id);
+  }
+
+  async getUserByEmail(email: string) {
+    return this.userRepository.findByEmail(email);
   }
 
   async update(id: string, dto: UpdateUserCoachDto | UpdateUserSimpleDto) {
@@ -51,7 +55,7 @@ export class UserService {
 
   async addFriend(id: string, { friendId }: ChangeFriendDto) {
     const existUser = await this.userRepository.findById(id);
-    const { friends, role } = existUser;
+    const { friends, role, name, gender } = existUser;
     const possibleFriend = await this.userRepository.findById(friendId);
 
     if (!existUser) {
@@ -66,8 +70,14 @@ export class UserService {
       throw new ForbiddenException(AUTH_USER_WRONG_ROLE);
     }
 
+    const notification: Notification = {
+      text: `${name} ${(gender === UserGender.Female) ? 'отправила' : 'отправил'} добавил Вас в друзья`,
+      date: new Date(),
+    };
+
     friends.push(friendId);
     possibleFriend.friends.push(existUser._id.toString());
+    possibleFriend.notifications.push(notification);
 
     const userEntity = new UserEntity(existUser);
     const possibleFriendEntity = new UserEntity(possibleFriend);
@@ -76,8 +86,6 @@ export class UserService {
     await this.userRepository.update(possibleFriend._id, possibleFriendEntity);
     
     return existUser;
-
-    // сюда надо добавить оповещение
   }
 
   async deleteFriend(id: string, { friendId }: ChangeFriendDto) {
@@ -172,6 +180,22 @@ export class UserService {
       balance.workouts.splice(workoutIndex, 1)
     }
 
+    return existUser;
+  }
+
+  async deleteNotifications(id: string) {
+    const existUser = await this.userRepository.findById(id);
+   
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    existUser.notifications = [];
+
+    const userEntity = new UserEntity(existUser);
+
+    await this.userRepository.update(existUser._id, userEntity);
+    
     return existUser;
   }
 }

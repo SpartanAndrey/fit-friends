@@ -10,15 +10,16 @@ Content-Type: application/json
 
 {
   "name": "Spartan Spartanych",
-  "email": "spar@gmail.com",
+  "email": "spartanec@gmail.com",
   "password": "123456",
-  "role": "coach",
+  "role": "User",
   "dateBirth": "2022-02-22",
-  "gender": "male",
+  "gender": "Male",
   "location": "Udelnaya",
-  "level": "beginner",
-  "workoutType": "boxing",
-  "certificate": "certificate1.pdf"
+  "level": "Beginner",
+  "workoutType": "Boxing",
+  "certificate": "certificate1.pdf",
+  "isReadyToTrain": true
 }
 
 ###
@@ -89,6 +90,8 @@ Content-Type: application/json
   "friendId": ""
 }
 
+###
+
 # Add workouts to user balance
 PATCH {{baseUrl}}/auth/{{userId}}/balance/add HTTP/1.1
 Authorization: Bearer {{accessToken}}
@@ -109,3 +112,16 @@ Content-Type: application/json
 {
   "workoutId": 1
 }
+
+###
+
+# Delete notifications
+PATCH {{baseUrl}}/auth/{{userId}}/friends/remove HTTP/1.1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "friendId": ""
+}
+
+###

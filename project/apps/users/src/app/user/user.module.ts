@@ -5,6 +5,7 @@ import { UserRepository } from './user.repository';
 import { UserCoachSchema } from './user-coach.model';
 import { UserSimpleSchema } from './user-simple.model';
 import { UserRole } from '@project/shared/app-types';
+import { UserService } from './user.service';
 
 @Module({
   imports: [MongooseModule.forFeature([
@@ -17,7 +18,7 @@ import { UserRole } from '@project/shared/app-types';
       ],
     }
   ])],
-  providers: [UserRepository],
-  exports: [UserRepository]
+  providers: [UserRepository, UserService],
+  exports: [UserRepository, UserService]
 })
 export class UserModule {}

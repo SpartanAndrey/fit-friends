@@ -1,4 +1,4 @@
-import { User, UserGender, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType, UserBalance} from '@project/shared/app-types';
+import { User, UserGender, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType, UserBalance, Notification } from '@project/shared/app-types';
 import { compare, genSalt, hash } from 'bcrypt';
 import { SALT_ROUNDS } from '../users.constant';
 
@@ -25,6 +25,7 @@ export class UserEntity implements User {
   public isReadyToTrain?: boolean;
   public friends?: string[];
   public balance?: UserBalance;
+  public notifications?: Notification[];
 
   constructor(user: User) {
     this.fillEntity(user);
@@ -57,6 +58,7 @@ export class UserEntity implements User {
     this.isReadyToTrain= user.isReadyToTrain;
     this.friends = user.friends;
     this.balance = user.balance;
+    this.notifications = user.notifications;
   }
 
   public async setPassword(password: string): Promise<UserEntity> {

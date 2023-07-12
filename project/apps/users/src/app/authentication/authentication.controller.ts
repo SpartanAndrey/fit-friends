@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards, Patch, Query} from '@nestjs/common';
+import { Body, Controller, Get, HttpCode, HttpStatus, Param, Post, Req, UseGuards, Patch, Query, Delete} from '@nestjs/common';
 import { AuthenticationService } from './authentication.service';
 import { CreateUserCoachDto } from './dto/create-user-coach.dto';
 import { CreateUserSimpleDto } from './dto/create-user-simple.dto';
@@ -185,6 +185,18 @@ export class AuthenticationController {
   @Patch('/:id/balance/sub')
   async decBalance(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateBalanceDto) {
     const updatedUser = await this.userService.decreaseBalance(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'Notifications has been successfully deleted.'
+  })
+  @Delete('/:id/notifications')
+  async removeNotifications(@Param('id', MongoidValidationPipe) id: string) {
+    const updatedUser = await this.userService.deleteNotifications(id);
     return fillObject(UserRdo, updatedUser);
   }
 }

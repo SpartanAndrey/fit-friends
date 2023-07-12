@@ -1,3 +1,4 @@
+import { Notification } from './notification.interface';
 import { UserBalance } from './user-balance';
 import { UserCoach } from './user-coach.interface';
 import { UserGender } from './user-gender.enum';
@@ -17,6 +18,7 @@ export interface User extends UserCoach, UserSimple {
   description?: string;
   location: UserLocation;
   image?: string;
-  friends?: string[]
-  balance?: UserBalance
+  friends?: string[];
+  balance?: UserBalance;
+  notifications?: Notification[];
 }

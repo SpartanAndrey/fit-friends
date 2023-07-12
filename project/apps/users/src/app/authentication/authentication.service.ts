@@ -58,7 +58,6 @@ export class AuthenticationService {
     return userEntity.toObject();
   }
 
-
   public async createUserToken(user: User) {
     const accessTokenPayload = createJWTPayload(user);
     const refreshTokenPayload = { ...accessTokenPayload, tokenId: crypto.randomUUID() };
