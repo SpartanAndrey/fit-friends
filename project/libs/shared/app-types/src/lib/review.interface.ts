@@ -3,6 +3,6 @@ export interface Review {
   userId: string;
   workoutId: number;
   rating: number;
-  review: string;
+  text: string;
   createdAt: Date;
 }

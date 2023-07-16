@@ -6,6 +6,6 @@ import { WorkoutRepository } from './workout.repository';
 @Module({
   controllers: [WorkoutController],
   providers: [WorkoutService, WorkoutRepository],
-  exports: [WorkoutRepository],
+  exports: [WorkoutRepository, WorkoutService],
 })
 export class WorkoutModule {}

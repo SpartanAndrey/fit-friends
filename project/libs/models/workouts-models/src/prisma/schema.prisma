@@ -46,6 +46,17 @@ model Order {
   @@map("orders")
 }
 
+model Review {
+  reviewId      Int      @id @default(autoincrement())  @map("review_id")
+  userId        String   @map("user_id")
+  workoutId     Int      @map("workout_id")
+  rating        Int
+  text          String
+  createdAt     DateTime @default(now())
+
+  @@map("reviews")
+}
+
 enum UserLevel {
   Beginner
   Amateur

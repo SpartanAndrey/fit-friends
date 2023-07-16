@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { CRUDRepository } from '@project/util/util-types';
 import { PrismaService } from '../prisma/prisma.service';
 import { OrderEntity } from './order.entity';
-import { Order } from '@project/shared/app-types';
+import { Order } from '@prisma/client';
 import { OrderQuery } from './query/order.query';
 
 @Injectable()
@@ -14,7 +14,7 @@ export class OrderRepository implements CRUDRepository<OrderEntity, number, Orde
       data: { 
         ...entity
       },
-    }) as unknown as Order;
+    });
   }
 
   public async update(orderId: number, entity: OrderEntity): Promise<Order> {
@@ -25,7 +25,7 @@ export class OrderRepository implements CRUDRepository<OrderEntity, number, Orde
       data: { 
         ...entity 
       },
-    }) as unknown as Order;
+    });
   }
 
   public async destroy(orderId: number): Promise<void> {
@@ -41,7 +41,7 @@ export class OrderRepository implements CRUDRepository<OrderEntity, number, Orde
       where: { 
         orderId
       },
-    }) as unknown as Order;
+    });
   }
 
   public async find(coachId: string, { limit, sortDirection, sortType, page }: OrderQuery): Promise<Order[]> {
@@ -55,6 +55,6 @@ export class OrderRepository implements CRUDRepository<OrderEntity, number, Orde
         { [sortType]: sortDirection }
       ],
       skip: page > 0 ? limit * (page - 1) : undefined,
-    }) as unknown as Order[];
+    });
   }
 }

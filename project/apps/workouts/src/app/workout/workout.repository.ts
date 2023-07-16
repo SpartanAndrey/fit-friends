@@ -104,4 +104,14 @@ export class WorkoutRepository implements CRUDRepository<WorkoutEntity, number, 
     }) as unknown as Workout[];
   }
 
+  public async updateRating(workoutId: number, newRating: number): Promise<Workout> {
+    return this.prisma.workout.update({
+      where: { 
+        workoutId
+      },
+      data: { 
+        rating: newRating
+      },
+    }) as unknown as Workout;
+  }
 }
