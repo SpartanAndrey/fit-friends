@@ -2,7 +2,7 @@ import dayjs from 'dayjs';
 import { CreateWorkoutDto } from './dto/create-workout.dto';
 import { UpdateWorkoutDto } from './dto/update-workout.dto';
 import { WorkoutRepository } from './workout.repository';
-import { Injectable, BadRequestException, ForbiddenException, NotFoundException } from '@nestjs/common';
+import { Injectable, ForbiddenException, NotFoundException } from '@nestjs/common';
 import { WorkoutEntity } from './workout.entity';
 import { WorkoutCatalogQuery } from './query/workout-catalog.query';
 import { WorkoutListQuery } from './query/workout-list.query';

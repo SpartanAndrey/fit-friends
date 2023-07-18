@@ -1,11 +1,9 @@
-import { UserRole, RequestStatus } from '@project/shared/app-types';
-import { RequestWorkoutRdo } from './rdo/request-workout.rdo';
-import { UserRdo } from '../authentication/rdo/user.rdo';
-import { Injectable, HttpException, HttpStatus, NotFoundException, ForbiddenException} from '@nestjs/common';
+import { UserRole, RequestStatus, Notification, UserGender } from '@project/shared/app-types';
+import { Injectable, NotFoundException, ForbiddenException} from '@nestjs/common';
 import { RequestWorkoutRepository } from './request-workout.repository';
 import { RequestWorkoutEntity } from './request-workout.entity';
 import { CreateRequestWorkoutDto } from './dto/create-request-workout.dto';
-import { AUTH_USER_EXIST, AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE, REQUEST_WORKOUT_INITIATOR_WRONG, REQUEST_WORKOUT_NOT_FOUND, REQUEST_WORKOUT_UPDATE_WRONG } from '../users.constant';
+import { AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE, REQUEST_WORKOUT_INITIATOR_WRONG, REQUEST_WORKOUT_NOT_FOUND, REQUEST_WORKOUT_UPDATE_WRONG } from '../users.constant';
 import { UpdateRequestWorkoutDto } from './dto/update-request-workout.dto';
 import { UserService } from '../user/user.service';
 import dayjs from 'dayjs';
@@ -30,6 +28,23 @@ export class RequestWorkoutService {
     if (role !== UserRole.User) {
       throw new ForbiddenException(AUTH_USER_WRONG_ROLE);
     }
+
+    const { userId } = dto;
+
+    const userForRequest = await this.userService.getUser(userId);
+
+    if (!userForRequest) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    const { name, gender } = userForRequest;
+
+    const notification: Notification = {
+      text: `${name} ${(gender === UserGender.Female) ? 'отправила' : 'отправил'} запрос на персональную тренировку.`,
+      date: new Date(),
+    };
+
+    userForRequest.notifications.push(notification);
 
     const requestWorkout = {...dto, initiatorId: _id, status: RequestStatus.Pending, updateStatusDate: dayjs().toDate()};
 
@@ -75,5 +90,3 @@ export class RequestWorkoutService {
     return existRequest;
   }
 }
-
-

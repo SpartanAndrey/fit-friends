@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException} from '@nestjs/common';
 import { UserRepository } from '../user/user.repository';
-import { AUTH_USER_FRIENDS_EMPTY, AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE, WORKOUT_NOT_FOUND } from '../users.constant';
+import { AUTH_USER_FRIENDS_EMPTY, AUTH_USER_NOT_FOUND, AUTH_USER_WRONG_ROLE, NOTIFICATION_NOT_FOUND, WORKOUT_NOT_FOUND } from '../users.constant';
 import { UpdateUserCoachDto } from '../authentication/dto/update-user-coach.dto';
 import { UpdateUserSimpleDto } from '../authentication/dto/update-user-simple.dto';
 import { UserEntity } from './user.entity';
@@ -8,6 +8,7 @@ import { UserQuery } from './query/user.query';
 import { Notification, UserGender, UserRole } from '@project/shared/app-types';
 import { ChangeFriendDto } from '../authentication/dto/change-friend.dto';
 import { UpdateBalanceDto } from '../authentication/dto/update-balance.dto';
+import { DeleteNotificationDto } from '../authentication/dto/delete-notification.dto';
 
 @Injectable()
 export class UserService {
@@ -51,6 +52,10 @@ export class UserService {
     }
 
     return this.userRepository.findFriends(friends, query);
+  }
+
+  public async getUsersList(ids: string[]) {
+    return this.userRepository.findUsers(ids);
   }
 
   async addFriend(id: string, { friendId }: ChangeFriendDto) {
@@ -180,6 +185,28 @@ export class UserService {
       balance.workouts.splice(workoutIndex, 1)
     }
 
+    return existUser;
+  }
+
+  async deleteNotification(id: string, { notificationText }: DeleteNotificationDto) {
+    const existUser = await this.userRepository.findById(id);
+   
+    if (!existUser) {
+      throw new NotFoundException(AUTH_USER_NOT_FOUND);
+    }
+
+    const index = existUser.notifications.findIndex((el) => el.text === notificationText)
+
+    if (index === -1) {
+      throw new NotFoundException(NOTIFICATION_NOT_FOUND)
+    }
+
+    existUser.notifications.splice(index, 1);
+
+    const userEntity = new UserEntity(existUser);
+
+    await this.userRepository.update(existUser._id, userEntity);
+    
     return existUser;
   }
 

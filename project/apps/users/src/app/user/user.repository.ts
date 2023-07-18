@@ -60,4 +60,10 @@ export class UserRepository implements CRUDRepository<UserEntity, string, User> 
       .skip(page > 0 ? limit * (page - 1) : undefined)
       .exec();
   }
+
+  public async findUsers(ids: string[]): Promise<User[] | null> {
+    return this.userModel
+      .find({ _id: { $in: [...ids]}})
+      .exec();
+  }
 }

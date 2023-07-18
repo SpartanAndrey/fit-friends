@@ -5,12 +5,12 @@
 
 # Create a new Coach
 # @name newUser
-POST {{baseUrl}}/auth/register HTTP/1.1
+POST {{baseUrl}}/users/register HTTP/1.1
 Content-Type: application/json
 
 {
   "name": "Spartan Spartanych",
-  "email": "spartanec@gmail.com",
+  "email": "sparta@gmail.com",
   "password": "123456",
   "role": "User",
   "dateBirth": "2022-02-22",
@@ -26,7 +26,7 @@ Content-Type: application/json
 
 # Login user by email and password
 # @name login
-POST {{baseUrl}}/auth/login HTTP/1.1
+POST {{baseUrl}}/users/login HTTP/1.1
 Content-Type: application/json
 
 {
@@ -37,24 +37,24 @@ Content-Type: application/json
 ###
 
 # Get user by ID
-GET {{baseUrl}}/auth/{{userId}} HTTP/1.1
+GET {{baseUrl}}/users/{{userId}} HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
 
 # Get users
-GET {{baseUrl}}/auth?level=amateur&location=Udelnaya HTTP/1.1
+GET {{baseUrl}}/users?level=amateur&location=Udelnaya HTTP/1.1
 
 ###
 
 # Get new JWT pair
-POST {{baseUrl}}/auth/refresh HTTP/1.1
+POST {{baseUrl}}/users/refresh HTTP/1.1
 Authorization: Bearer {{refreshToken}}
 
 ###
 
 # Update user data
-PATCH {{baseUrl}}/auth/{{userId}} HTTP/1.1
+PATCH {{baseUrl}}/users/{{userId}} HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -65,13 +65,13 @@ Content-Type: application/json
 ###
 
 # Check user token
-POST {{baseUrl}}/auth/check HTTP/1.1
+POST {{baseUrl}}/users/check HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
 
 # Add friend
-PATCH {{baseUrl}}/auth/{{userId}}/friends/add HTTP/1.1
+PATCH {{baseUrl}}/users/{{userId}}/friends/add HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -82,7 +82,7 @@ Content-Type: application/json
 ###
 
 # Remove friend
-PATCH {{baseUrl}}/auth/{{userId}}/friends/remove HTTP/1.1
+PATCH {{baseUrl}}/users/{{userId}}/friends/remove HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -93,7 +93,7 @@ Content-Type: application/json
 ###
 
 # Add workouts to user balance
-PATCH {{baseUrl}}/auth/{{userId}}/balance/add HTTP/1.1
+PATCH {{baseUrl}}/users/{{userId}}/balance/add HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -105,23 +105,12 @@ Content-Type: application/json
 ###
 
 # Subtract workout to user balance
-PATCH {{baseUrl}}/auth/{{userId}}/balance/sub HTTP/1.1
+PATCH {{baseUrl}}/users/{{userId}}/balance/sub HTTP/1.1
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
   "workoutId": 1
-}
-
-###
-
-# Delete notifications
-PATCH {{baseUrl}}/auth/{{userId}}/friends/remove HTTP/1.1
-Authorization: Bearer {{accessToken}}
-Content-Type: application/json
-
-{
-  "friendId": ""
 }
 
 ###

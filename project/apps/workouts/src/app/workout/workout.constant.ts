@@ -25,7 +25,6 @@ export const WORKOUT_DUEDATE_NOT_VALID = 'The due date is not valid.';
 export const WORKOUT_FORBIDDEN  = 'Access is denied.';
 export const WORKOUT_STATUS_CONDITIONS_WRONG = 'Update status conditions are wrong.';
 export const WORKOUT_NOT_FOUND = 'Workout is not found.';
-export const WORKOUT_CANT_TAKE = 'You\'re not contractor.';
 export const WORKOUT_RESPONSE_EXIST = 'You have already responsed this task.';
 export const WORKOUT_CONTRACTOR_EXIST = 'The contractor has been already appointed.';
 export const WORKOUT_NOT_AUTHOR= 'You\'re not owner of the task.';

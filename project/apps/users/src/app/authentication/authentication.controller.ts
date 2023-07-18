@@ -20,9 +20,10 @@ import { UserService } from '../user/user.service';
 import { UserQuery } from '../user/query/user.query';
 import { ChangeFriendDto } from './dto/change-friend.dto';
 import { UpdateBalanceDto } from './dto/update-balance.dto';
+import { DeleteNotificationDto } from './dto/delete-notification.dto';
 
-@ApiTags('authentication')
-@Controller('auth')
+@ApiTags('users')
+@Controller('users')
 export class AuthenticationController {
   constructor(
     private readonly authService: AuthenticationService,
@@ -78,6 +79,7 @@ export class AuthenticationController {
     return fillObject(UserRdo, existUser);
   }
 
+  @UseGuards(JwtAuthGuard)
   @ApiResponse({
     type: UserRdo,
     status: HttpStatus.OK,
@@ -125,6 +127,19 @@ export class AuthenticationController {
   @Post('check')
   public async checkToken(@Req() { user: payload }: RequestWithTokenPayload) {
     return payload;
+  }
+
+  @Post('/users-list')
+  @HttpCode(HttpStatus.OK)
+  @ApiResponse({
+    status: HttpStatus.OK,
+    description: 'The users list has been successfully added.'
+  })
+  async getUsers(@Body() data: {ids: string[]}) {
+    
+    const users = await this.userService.getUsersList(data.ids);
+
+    return fillObject(UserRdo, users);
   }
 
   @UseGuards(JwtAuthGuard)
@@ -185,6 +200,18 @@ export class AuthenticationController {
   @Patch('/:id/balance/sub')
   async decBalance(@Param('id', MongoidValidationPipe) id: string, @Body() dto: UpdateBalanceDto) {
     const updatedUser = await this.userService.decreaseBalance(id, dto);
+    return fillObject(UserRdo, updatedUser);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @ApiResponse({
+    type: UserRdo,
+    status: HttpStatus.OK,
+    description: 'Notification has been successfully deleted.'
+  })
+  @Patch('/:id/notification')
+  async removeNotification(@Param('id', MongoidValidationPipe) id: string, @Body() dto: DeleteNotificationDto) {
+    const updatedUser = await this.userService.deleteNotification(id, dto);
     return fillObject(UserRdo, updatedUser);
   }
 

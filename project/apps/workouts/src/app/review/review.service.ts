@@ -14,7 +14,7 @@ export class ReviewService {
     private readonly workoutRepository: WorkoutRepository,
   ) {}
   
-  public async create(dto: CreateReviewDto) {
+  public async createReview(dto: CreateReviewDto) {
     const review = {...dto, createdAt: dayjs().toDate()};
 
     const { workoutId } = dto;
@@ -48,7 +48,7 @@ export class ReviewService {
     return this.reviewRepository.destroy(id);
   }
 
-  async getOrders(workoutId: number, query: ReviewQuery) {
+  async getReviews(workoutId: number, query: ReviewQuery) {
     return this.reviewRepository.find(workoutId, query);
   }
 
