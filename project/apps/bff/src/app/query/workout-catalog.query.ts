@@ -1,6 +1,6 @@
 import { IsIn, IsNumber, IsOptional, IsPositive, Max, Min } from 'class-validator';
 import { Transform } from 'class-transformer';
-import { DEFAULT_QUERY_LIMIT, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_CALORIES_NUMBER, MAX_RATING_NUMBER, MIN_CALORIES_NUMBER, MIN_RATING_NUMBER, WORKOUT_CALORIES_NUMBER, WORKOUT_LIMIT_NOT_BE_EXCEEDED, WORKOUT_RATING_NUMBER } from '../workout.constant';
+import { DEFAULT_QUERY_LIMIT, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_TYPE, MAX_CALORIES_NUMBER, MAX_RATING_NUMBER, MIN_CALORIES_NUMBER, MIN_RATING_NUMBER, WORKOUT_CALORIES_NUMBER, WORKOUT_LIMIT_NOT_BE_EXCEEDED, WORKOUT_RATING_NUMBER } from '../bff.constant';
 import { SortType, WorkoutType } from '@project/shared/app-types';
 
 export class WorkoutCatalogQuery {

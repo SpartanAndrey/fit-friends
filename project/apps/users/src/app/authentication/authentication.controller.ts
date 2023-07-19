@@ -161,7 +161,7 @@ export class AuthenticationController {
     status: HttpStatus.CREATED,
     description: 'Friend has been successfully added.'
   })
-  @Patch('/:id/friends/add')
+  @Patch(':id/friends/add')
   async addFriend(@Param('id', MongoidValidationPipe) id: string, @Body() dto: ChangeFriendDto) {
     const updatedUser = await this.userService.addFriend(id, dto);
     return fillObject(UserRdo, updatedUser);
@@ -173,7 +173,7 @@ export class AuthenticationController {
     status: HttpStatus.CREATED,
     description: 'Friend has been successfully added.'
   })
-  @Patch('/:id/friends/remove')
+  @Patch(':id/friends/remove')
   async removeFriend(@Param('id', MongoidValidationPipe) id: string, @Body() dto: ChangeFriendDto) {
     const updatedUser = await this.userService.deleteFriend(id, dto);
     return fillObject(UserRdo, updatedUser);

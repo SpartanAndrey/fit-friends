@@ -1,6 +1,6 @@
 import { Document } from 'mongoose';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { User, UserGender, UserLocation, UserRole } from '@project/shared/app-types';
+import { User, UserGender, UserLocation, UserRole, Notification, UserBalance } from '@project/shared/app-types';
 
 @Schema({
     collection: 'users',
@@ -61,6 +61,23 @@ export class UserModel extends Document implements User {
 
   @Prop()
   public image?: string;
+
+  @Prop({
+    default: []
+  })
+  public friends?: string[];
+
+  @Prop({
+    required: false,
+    type: Object,
+  })
+  public notifications?: Notification[];
+
+  @Prop({
+    required: false,
+    type: Object,
+  })
+  public balance?: UserBalance;
 
 }
 

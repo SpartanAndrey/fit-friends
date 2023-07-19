@@ -6,35 +6,14 @@
 @workoutId = {{workout.response.body.$.id}}
 
 #------Users------
-# Create a new user simple
-# @name newUser
-POST {{baseUrl}}/users/register HTTP/1.1
-Content-Type: application/json
-
-{
-  "name": "Spartan Spartanych",
-  "email": "sparta@gmail.com",
-  "password": "123456",
-  "role": "User",
-  "dateBirth": "1995-02-22",
-  "gender": "Male",
-  "location": "Udelnaya",
-  "level": "Beginner",
-  "workoutType": "Boxing",
-  "workoutTime": "10-30 min",
-  "isReadyToTrain": true
-}
-
-###
-
 # Create a new user coach
 # @name newUser
 POST {{baseUrl}}/users/register HTTP/1.1
-Content-Type: application/json
+Content-Type: application/json 
 
 {
   "name": "Spartan Spartanych",
-  "email": "spartan@gmail.com",
+  "email": "spart@gmail.com",
   "password": "123456",
   "role": "Coach",
   "dateBirth": "1998-02-22",
@@ -48,21 +27,38 @@ Content-Type: application/json
 
 ###
 
+# Create a new user simple
+# @name newUser
+POST {{baseUrl}}/users/register HTTP/1.1
+Content-Type: application/json 
+
+{
+  "name": "Dinam Dynamich",
+  "email": "din@gmail.com",
+  "password": "123456",
+  "role": "User",
+  "dateBirth": "2000-02-22",
+  "gender": "Male",
+  "location": "Udelnaya",
+  "level": "Beginner",
+  "workoutType": "Yoga",
+  "workoutTime": "10-30 min",
+  "caloriesToBurnNumber": 1000,
+  "caloriesToSpendNumber": 2000,
+  "isReadyToTrain": true
+}
+
+###
+
 # Login user by email and password
 # @name login
 POST {{baseUrl}}/users/login HTTP/1.1
 Content-Type: application/json
 
 {
-  "email": "spartanec@gmail.com",
+  "email": "spart@gmail.com",
   "password": "123456"
 }
-
-###
-
-# Check user token
-POST {{baseUrl}}/users/check HTTP/1.1
-Authorization: Bearer {{accessToken}}
 
 ###
 
@@ -73,7 +69,8 @@ Authorization: Bearer {{accessToken}}
 ###
 
 # Get users
-GET {{baseUrl}}/users?level=amateur&location=Udelnaya HTTP/1.1
+GET {{baseUrl}}/users?level=Amateur&location=Udelnaya HTTP/1.1
+Authorization: Bearer {{accessToken}}
 
 ###
 
@@ -89,7 +86,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "name": "Dinam Dinamych"
+  "name": "Sparta Spartakovich"
 }
 
 ###
@@ -100,7 +97,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "friendId": ""
+  "friendId": "64b8198731af018aaa0b5801"
 }
 
 ###
@@ -111,7 +108,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "friendId": ""
+  "friendId": "4b828a4ba286243480cdba0"
 }
 
 ###
@@ -181,6 +178,7 @@ Authorization: Bearer {{accessToken}}
 ###
 
 #------Workouts------
+# Create a new workout
 # @name workout
 POST {{baseUrl}}/workouts/create HTTP/1.1
 Authorization: Bearer {{accessToken}}
@@ -200,8 +198,10 @@ Content-Type: application/json
   "specialOffer": false
 }
 
+###
+
 # Get workout by ID
-GET {{baseUrl}}/workouts/{{workoutId}} HTTP/1.1
+GET {{baseUrl}}/workouts/7 HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###
@@ -218,7 +218,7 @@ Content-Type: application/json
 ###
 
 # Get workouts
-GET {{baseUrl}}/workouts?sortDirection=desc&limit=2&page=1 HTTP/1.1
+GET {{baseUrl}}/workouts?sortDirection=desc&limit=5&page=1 HTTP/1.1
 Authorization: Bearer {{accessToken}}
 
 ###

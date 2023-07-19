@@ -17,7 +17,7 @@ async function fillDb() {
         demonstration: 'crossfit.mp4',
         price: 0,
         rating: 5,
-        coachId: '',
+        coachId: '64b812b431af018aaa0b57f0',
         specialOffer: false,
       },
     });
@@ -34,7 +34,7 @@ async function fillDb() {
         demonstration: 'boxing.mp4',
         price: 1000,
         rating: 5,
-        coachId: '',
+        coachId: '64b812b431af018aaa0b57f0',
         specialOffer: false,
       },
     });
@@ -51,7 +51,7 @@ async function fillDb() {
         demonstration: 'crossfit.mp4',
         price: 1200,
         rating: 4,
-        coachId: '',
+        coachId: '64b812b431af018aaa0b57f0',
         specialOffer: false,
       },
     });
@@ -68,7 +68,7 @@ async function fillDb() {
         demonstration: 'crossfit.mp4',
         price: 1600,
         rating: 5,
-        coachId: '',
+        coachId: '64b812b431af018aaa0b57f0',
         specialOffer: false,
       },
     });
@@ -85,7 +85,7 @@ async function fillDb() {
         demonstration: 'yoga.mp4',
         price: 1800,
         rating: 4,
-        coachId: '',
+        coachId: '64b812b431af018aaa0b57f0',
         specialOffer: true,
       },
     });

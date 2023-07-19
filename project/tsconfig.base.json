@@ -18,6 +18,9 @@
       "@project/config/config-notify": [
         "libs/config/config-notify/src/index.ts"
       ],
+      "@project/config/config-uploader": [
+        "libs/config/config-uploader/src/index.ts"
+      ],
       "@project/config/config-users": ["libs/config/config-users/src/index.ts"],
       "@project/models/workouts-models": [
         "libs/models/workouts-models/src/index.ts"

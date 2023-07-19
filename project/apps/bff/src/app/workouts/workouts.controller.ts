@@ -1,5 +1,5 @@
 import { HttpService } from '@nestjs/axios';
-import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, UseGuards, UseInterceptors } from '@nestjs/common';
+import { Body, Controller, Get, HttpStatus, Param, Patch, Post, Query, Req, UseGuards, UseInterceptors } from '@nestjs/common';
 import { ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CheckAuthGuard } from '../guards/check-auth.guard';
 import { CoachIdInterceptor } from '../interceptors/coach-id.interceptor';
@@ -8,7 +8,6 @@ import { WorkoutRdo } from '../rdo/workout.rdo';
 import { CreateWorkoutDto } from '../dto/create-workout.dto';
 import { UpdateWorkoutDto } from '../dto/update-workout.dto';
 import { WorkoutCatalogQuery } from '../query/workout-catalog.query';
-import { fillWorkoutData } from '../utils/fill-workout-data';
 import { WorkoutListQuery } from '../query/workout-list.query';
 import { CheckCoachInterceptor } from '../interceptors/check-coach.interceptor';
 
@@ -52,12 +51,16 @@ export class WorkoutsController {
   })
   @Get(':id')
   @UseGuards(CheckAuthGuard)
-  public async show(@Param('id') id: number) {
+  public async show(@Req() req: Request, @Param('id') id: number) {
     
     const { data } = await this.httpService.axiosRef.get(`${ApplicationServiceURL.Workouts}/${id}`);
 
-    const coachData = (await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${data.coachId}`)).data;
-    
+    const coachData = (await this.httpService.axiosRef.get(`${ApplicationServiceURL.Users}/${data.coachId}`, {
+      headers: {
+        'Authorization': req.headers['authorization']
+      }
+    })).data;
+
     delete data.coachId;
     
     return {...data, coach: coachData};
@@ -74,7 +77,7 @@ export class WorkoutsController {
     
     const workouts = (await this.httpService.axiosRef.get(`${ApplicationServiceURL.Workouts}/`, { params: query })).data;
 
-    return fillWorkoutData(workouts, this.httpService);
+    return workouts;
   }
 
   @ApiResponse({
@@ -88,7 +91,8 @@ export class WorkoutsController {
   async indexCoach(@Param('coachId') coachId: string, @Query() query: WorkoutListQuery) {
 
     const workouts = (await this.httpService.axiosRef.get(`${ApplicationServiceURL.Workouts}/coach/${coachId}`, { params: query })).data;
-    return fillWorkoutData(workouts, this.httpService);
+    
+    return workouts;
   }
 
 }

@@ -60,7 +60,7 @@ export class UserService {
 
   async addFriend(id: string, { friendId }: ChangeFriendDto) {
     const existUser = await this.userRepository.findById(id);
-    const { friends, role, name, gender } = existUser;
+    const { role, name, gender } = existUser;
     const possibleFriend = await this.userRepository.findById(friendId);
 
     if (!existUser) {
@@ -75,12 +75,13 @@ export class UserService {
       throw new ForbiddenException(AUTH_USER_WRONG_ROLE);
     }
 
+    existUser.friends.push(friendId);
+
     const notification: Notification = {
-      text: `${name} ${(gender === UserGender.Female) ? 'отправила' : 'отправил'} добавил Вас в друзья`,
+      text: `${name} ${(gender === UserGender.Female) ? 'добавила' : 'добавил'} Вас в друзья`,
       date: new Date(),
     };
 
-    friends.push(friendId);
     possibleFriend.friends.push(existUser._id.toString());
     possibleFriend.notifications.push(notification);
 
@@ -157,6 +158,10 @@ export class UserService {
 
     balance.totalWorkoutQuantity += workoutNumber;
 
+    const userEntity = new UserEntity(existUser);
+
+    await this.userRepository.update(existUser._id, userEntity);
+
     return existUser;
   }
 
@@ -184,6 +189,10 @@ export class UserService {
     if (balance.workouts[workoutIndex].quantity === 0) {
       balance.workouts.splice(workoutIndex, 1)
     }
+
+    const userEntity = new UserEntity(existUser);
+
+    await this.userRepository.update(existUser._id, userEntity);
 
     return existUser;
   }

@@ -1,0 +1,19 @@
+@baseUrl = http://localhost:3333/api
+
+# Upload some file
+POST {{baseUrl}}/files/upload HTTP/1.1
+Content-Type: multipart/form-data; boundary=WebKitFormBoundary
+
+--WebKitFormBoundary
+Content-Disposition: form-data; name="file"; filename="1.png"
+Content-Type: image/png
+
+< ../../markup/img/avatars/1.png
+--WebKitFormBoundary--
+
+###
+
+# Get file by ID
+GET {{baseUrl}}/files/643ce2fb1e53ffd73109073c HTTP/1.1
+
+###

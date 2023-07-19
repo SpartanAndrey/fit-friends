@@ -33,7 +33,7 @@ export class AuthenticationService {
       throw new ConflictException(AUTH_USER_EXIST);
     }
 
-    const user = {...dto, dateBirth: dayjs(dateBirth).toDate(), passwordHash: '', friends: []};
+    const user = {...dto, dateBirth: dayjs(dateBirth).toDate(), passwordHash: '', friends: [], notifications: [], balance: { workouts: [],  totalWorkoutQuantity: 0} };
     
     const userEntity = await new UserEntity(user)
       .setPassword(password)
