@@ -4,7 +4,7 @@ import { WorkoutType } from './workout-type.enum';
 export interface UserCoach {
   level?: UserLevel;
   workoutType?: WorkoutType[];
-  certificate?: string;
+  certificate?: string[];
   coachInfo?: string;
   isReadyToCoach?: boolean;
 }

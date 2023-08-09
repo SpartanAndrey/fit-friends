@@ -13,7 +13,7 @@ export class CreateUserCoachDto {
   public image?: string;
   public level!: UserLevel;
   public workoutType!: WorkoutType[];
-  public certificate?: string;
+  public certificates?: string[];
   public coachInfo?: string;
   public isReadyToCoach?: boolean; 
 }

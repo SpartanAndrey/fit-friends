@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, AuthorizationStatus } from '../../constant';
 import { UserProcess } from '../../types/state';
-import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction } from '../api-action';
 
 const initialState: UserProcess = {
   userData: {
     authStatus: AuthorizationStatus.Unknown,
     loggedUser: null,
-    existsEmail: false
+    existsEmail: false,
+    userInfo: null,
+    isLoading: false,
   }
 };
 
@@ -53,7 +55,14 @@ export const userProcess = createSlice({
       })
       .addCase(registerUserAction.rejected, (state) => {
         state.userData.authStatus = AuthorizationStatus.NoAuth;
-      });
+      })
+      .addCase(fetchUserCoachAction.pending, (state) => {
+        state.userData.isLoading = true;
+      })
+      .addCase(fetchUserCoachAction.fulfilled, (state, action) => {
+        state.userData.userInfo = action.payload;
+        state.userData.isLoading = false;
+      })
   }
 });
 

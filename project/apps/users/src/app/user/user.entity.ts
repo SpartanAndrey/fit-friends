@@ -16,7 +16,7 @@ export class UserEntity implements User {
   public image?: string;
   public level?: UserLevel;
   public workoutType?: WorkoutType[];
-  public certificate?: string;
+  public certificate?: string[];
   public coachInfo?: string;
   public isReadyToCoach?: boolean;
   public workoutTime?: WorkoutTime;

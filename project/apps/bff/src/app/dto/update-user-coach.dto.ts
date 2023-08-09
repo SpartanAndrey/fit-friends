@@ -78,7 +78,7 @@ export class UpdateUserCoachDto {
     example: 'sertificate.pdf',
   })
   @IsOptional()
-  public certificate?: string;
+  public certificate?: string[];
 
   @ApiProperty({
     description: ' Текст с описанием заслуг тренера. Максимальная длина: 140 символов',

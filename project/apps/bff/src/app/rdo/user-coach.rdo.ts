@@ -100,7 +100,7 @@ export class UserCoachRdo {
     example: 'sertificate.pdf',
   })
   @Expose()
-  public certificate?: string;
+  public certificate?: string[];
 
   @ApiProperty({
     description: ' Текст с описанием заслуг тренера. Максимальная длина: 140 символов',

@@ -4,14 +4,16 @@ export enum AppRoute {
   Register = '/register',
   QuestionnaireCoach = '/questionnaire-coach',
   QuestionnaireUser = '/questionnaire-user',
-  CoachPersonalAccount = 'coach-personal-account',
+  PersonalAccountCoach = '/coach-personal-account',
   Login = '/login',
   Favorites = '/favorites',
   Room = '/offers/:id',
   NotFound ='*',
+  Upload = 'files/upload'
 }
 
 export enum APIRoute {
+  Users = '/users',
   Login = '/users/login',
   Logout = '/users/logout',
   Register = '/users/register',
@@ -83,10 +85,17 @@ export enum WorkoutType {
 
 export const WORKOUT_TYPES: string[] = Object.values(WorkoutType);
 
-export const enum CoachDescriptionLength {
+export const enum DescriptionLength {
   MinLength = 10,
   MaxLength = 140
 }
+
+export const enum NameLength {
+  MinLength = 1,
+  MaxLength = 15
+}
+
+export const NAME_PATTERN = '^[A-Za-zА-Яа-яЁё\s]+$';
 
 export enum WorkoutTime {
   Short = '10-30 min',
@@ -99,3 +108,5 @@ export const WORKOUT_TIMES: string[] = Object.values(WorkoutTime);
 
 export const MIN_CALORIES_NUMBER = 1000;
 export const MAX_CALORIES_NUMBER = 1000;
+
+export const VISIBLE_SLIDES = 3;

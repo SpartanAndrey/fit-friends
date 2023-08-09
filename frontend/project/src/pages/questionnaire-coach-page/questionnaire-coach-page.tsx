@@ -1,6 +1,6 @@
 import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { AppRoute, CoachDescriptionLength, LEVELS, UserLevel, WORKOUT_TYPES, WorkoutType } from '../../constant';
+import { AppRoute, DescriptionLength, LEVELS, UserLevel, WORKOUT_TYPES, WorkoutType } from '../../constant';
 import { useLocation } from 'react-router-dom';
 import { QuestionnaireCoachData } from '../../types/questionnaire-coach-data';
 import { redirectToRoute } from '../../store/action';
@@ -23,7 +23,7 @@ function QuestionnaireCoachPage(): JSX.Element {
     const data: QuestionnaireCoachData = {
       level: String(levelUser),
       workoutTypes: choosenWorkoutTypes,
-      certificate: String(coachCertificate),
+      certificates: [String(coachCertificate)],
       coachInfo: String(coachInfo),
       isReadyToCoach: isReadyToCoach,
       fileCertificate: coachCertificate,
@@ -32,7 +32,7 @@ function QuestionnaireCoachPage(): JSX.Element {
     const totalData = { ...data, ...regData };
 
     dispatch(registerCoachAction(totalData));
-    dispatch(redirectToRoute(AppRoute.CoachPersonalAccount));
+    dispatch(redirectToRoute(AppRoute.PersonalAccountCoach));
   };
 
   const inputRef = useRef<HTMLInputElement | null>(null);
@@ -84,8 +84,8 @@ function QuestionnaireCoachPage(): JSX.Element {
   const [isNotCorrectLength, setSignCorrectLength] = useState<boolean>(false);
   useEffect(() => {
     if (
-      coachInfo && (coachInfo.length < CoachDescriptionLength.MinLength
-      || coachInfo.length > CoachDescriptionLength.MaxLength)
+      coachInfo && (coachInfo.length < DescriptionLength.MinLength
+      || coachInfo.length > DescriptionLength.MaxLength)
     ) {
       setSignCorrectLength(true);
     }

@@ -204,7 +204,7 @@ function RegisterPage(): JSX.Element {
                       className='custom-select__button'
                       type='button'
                       aria-label='Выберите одну из опций'
-                      onClick={handleToggleButtonClick}
+                      onClick={()=>handleToggleButtonClick}
                     >
                       <span className='custom-select__text'>{currentLocation}</span>
                       <span className='custom-select__icon'>

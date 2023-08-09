@@ -22,7 +22,7 @@ export class UserCoachModel extends Document implements UserCoach {
   @Prop({
     required: true,
   })
-  public certificate: string;
+  public certificate: string[];
 
   @Prop()
   public coachInfo: string;

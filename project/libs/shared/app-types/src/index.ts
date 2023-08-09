@@ -14,6 +14,7 @@ export * from './lib/user-balance';
 export * from './lib/notification.interface';
 export * from './lib/token.interface';
 export * from './lib/subscriber.interface';
+export * from './lib/file.interface';
 export * from './lib/user-gender.enum';
 export * from './lib/user-level.enum';
 export * from './lib/user-location.enum';

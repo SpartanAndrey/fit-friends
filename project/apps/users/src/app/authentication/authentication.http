@@ -18,7 +18,7 @@ Content-Type: application/json
   "location": "Udelnaya",
   "level": "Amateur",
   "workoutType": "Boxing",
-  "certificate": "certificate1.pdf",
+  "certificate": ["certificate1.pdf"],
   "isReadyToCoach": true
 }
 

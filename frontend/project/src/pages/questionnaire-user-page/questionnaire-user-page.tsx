@@ -1,10 +1,9 @@
-import { ChangeEvent, FormEvent, useEffect, useRef, useState } from 'react';
+import { FormEvent, useState } from 'react';
 import { useAppDispatch } from '../../hooks';
-import { AppRoute, CoachDescriptionLength, LEVELS, MAX_CALORIES_NUMBER, MIN_CALORIES_NUMBER, UserLevel, WORKOUT_TIMES, WORKOUT_TYPES, WorkoutTime, WorkoutType } from '../../constant';
+import { AppRoute, LEVELS, MAX_CALORIES_NUMBER, MIN_CALORIES_NUMBER, UserLevel, WORKOUT_TIMES, WORKOUT_TYPES, WorkoutTime, WorkoutType } from '../../constant';
 import { useLocation } from 'react-router-dom';
-import { QuestionnaireCoachData } from '../../types/questionnaire-coach-data';
 import { redirectToRoute } from '../../store/action';
-import { registerCoachAction, registerUserAction } from '../../store/api-action';
+import { registerUserAction } from '../../store/api-action';
 import { QuestionnaireUserData } from '../../types/questionnaire-user-data';
 
 enum InputNameEnum {

@@ -1,7 +1,7 @@
 export interface QuestionnaireCoachData {
   level: string;
   workoutTypes: string[];
-  certificate: string;
+  certificates: string[];
   coachInfo: string;
   isReadyToCoach: boolean;
   fileCertificate: File | undefined;
