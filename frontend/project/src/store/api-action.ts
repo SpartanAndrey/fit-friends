@@ -1,7 +1,7 @@
 import { AxiosInstance } from 'axios';
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { AppDispatch, State } from '../types/state.js';
-import { APIRoute } from '../constant';
+import { APIRoute, DEFAULT_QUERY_LIMIT, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_DIRECTION_USER, DEFAULT_SORT_TYPE } from '../constant';
 import { AuthData } from '../types/auth-data.js';
 import { LoggedUserData } from '../types/logged-user-data.js';
 import { saveToken, dropToken } from '../services/token';
@@ -14,6 +14,12 @@ import { UserCoach } from '../types/user-coach.js';
 import { UpdateUserCoachDto } from '../components/dto/update-user-coach.dto.js';
 import { UpdateUserSimpleDto } from '../components/dto/update-user-simple.dto.js';
 import { UserSimple } from '../types/user-simple.js';
+import { UserFull } from '../types/user-full.js';
+import { UserQuery, WorkoutCatalogQuery } from '../types/query.js';
+import { Workout } from '../types/workout.js';
+
+
+//сервис пользователей
 
 export const checkAuthAction = createAsyncThunk<LoggedUserData, undefined, {
   dispatch: AppDispatch;
@@ -116,7 +122,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     state: State;
     extra: AxiosInstance;
    }>(
-     'users/get/coach',
+     'users/get/simple',
      async (id, { dispatch, extra: api }) => {
        const { data } = await api.get<UserSimple>(`${APIRoute.Users}/${id}`);
        return data;
@@ -149,7 +155,60 @@ export const logoutAction = createAsyncThunk<void, undefined, {
          return data;
        });
 
-  
+  export const fetchUserCatalogAction = createAsyncThunk<UserFull[], UserQuery | undefined, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance; }>(
+      'users/catalog',
+      async (query, {extra: api}) => {
+        try {
+          const limit = query && query.limit ? `limit=${query.limit}&` : `limit=${DEFAULT_QUERY_LIMIT}&`;
+          const sortDirection = query && query.sortDirection ? `sortDirection=${query.sortDirection}&` : `limit=${DEFAULT_SORT_DIRECTION_USER}&`;
+          const page = query && query.page ? `page=${query.page}&` : 'page=1&';
+          const role = query && query.role ? `role=${query.role}&` : '';
+          const location = query && query.location ? `location=${query.location}&` : '';
+          const level = query && query.level ? `level=${query.level}&` : '';
+          const type = query && query.workoutType ? `workoutType=${query.workoutType.join(',').trim()}` : '';
+
+          const {data} = await api.get<UserFull[]>(`${APIRoute.Users}?${limit}${sortDirection}${page}${role}${level}${location}${type}`);
+          return data;
+
+        } catch (error) {
+
+          return Promise.reject(error);
+        }
+      });
+
+  //сервис тренировок
+
+  export const fetchWorkoutCatalogAction = createAsyncThunk<Workout[], WorkoutCatalogQuery | undefined, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance; }>(
+      'workouts/catalog',
+      async (query, {extra: api}) => {
+        try {
+          const limit = query && query.limit ? `limit=${query.limit}&` : `limit=${DEFAULT_QUERY_LIMIT}&`;
+          const sortDirection = query && query.sortDirection ? `sortDirection=${query.sortDirection}&` : `limit=${DEFAULT_SORT_DIRECTION}&`;
+          const SortType = query && query.sortType ? `sortType=${query.sortType}&` : `limit=${DEFAULT_SORT_TYPE}&`;
+          const page = query && query.page ? `page=${query.page}&` : 'page=1&';
+          const priceMin = query && query.priceMin ? `priceMin=${query.priceMin}&` : '';
+          const priceMax = query && query.priceMax ? `priceMax=${query.priceMax}&` : '';
+          const caloriesMin = query && query.caloriesMin ? `caloriesMin=${query.caloriesMin}&` : '';
+          const caloriesMax = query && query.caloriesMax ? `caloriesMax=${query.caloriesMax}&` : '';
+          const ratingMin = query && query.ratingMin ? `ratingMin=${query.ratingMin}&` : '';
+          const ratingMax = query && query.ratingMax ? `ratingMax=${query.ratingMax}&` : '';
+          const types = query && query.types ? `trainingType=${query.types.join(',').trim()}` : '';
+
+          const {data} = await api.get<Workout[]>(`${APIRoute.Users}?${limit}${sortDirection}${SortType}${page}${types}${priceMin}${priceMax}${caloriesMin}${caloriesMax}${ratingMin}${ratingMax}`);
+          return data;
+
+        } catch (error) {
+
+          return Promise.reject(error);
+        }
+      });
+
 
   export const uploadFile = createAsyncThunk<void, FileType, {
       dispatch: AppDispatch;

@@ -1,4 +1,4 @@
-import { ChangeEvent, useEffect, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import { updateUserCoachAction } from '../../store/api-action';
 import { useAppDispatch } from '../../hooks';
 import { UserCoach } from '../../types/user-coach';
@@ -26,10 +26,6 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
     setEditData({ ...editData, [name]: value });
   };
   
-  const handleEditButtonClick = () => {
-    setIsEdit((prevIsEdit) => !prevIsEdit);
-  };
-
   const [choosenWorkoutTypes, setChoosenWorkoutTypes] = useState<WorkoutType[]>(coach.workoutType);
 
   const [isNotWorkoutType, setIsNotWorkoutType] = useState(!(coach.workoutType.length >= 1 && coach.workoutType.length <= 3));

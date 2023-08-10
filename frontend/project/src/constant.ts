@@ -1,19 +1,20 @@
 export enum AppRoute {
-  Intro = '/',
-  Main = '/main',
+  Intro = '/intro',
+  Main = '/',
   Register = '/register',
+  Login = '/login',
   QuestionnaireCoach = '/questionnaire-coach',
   QuestionnaireUser = '/questionnaire-user',
   PersonalAccountCoach = '/coach-personal-account',
-  Login = '/login',
-  Favorites = '/favorites',
-  Room = '/offers/:id',
+  WorkoutsCatalog = '/workouts-catalog',
+  UsersCatalog = '/users-catalog',
   NotFound ='*',
   Upload = 'files/upload'
 }
 
 export enum APIRoute {
   Users = '/users',
+  Workouts = '/workouts',
   Login = '/users/login',
   Logout = '/users/logout',
   Register = '/users/register',
@@ -104,9 +105,33 @@ export enum WorkoutTime {
   ExtraLong = '80-100 min',
 }
 
+export enum WorkoutGender {
+  Men = 'Men',
+  Women = 'Women',
+  Everybody = 'Everybody',
+}
+
+export enum SortType {
+  CreatedAt = 'createdAt',
+  Price = 'price',
+}
+
+export enum SortDirection {
+  Ascended = 'asc',
+  Descended = 'desc',
+} 
+
 export const WORKOUT_TIMES: string[] = Object.values(WorkoutTime);
 
 export const MIN_CALORIES_NUMBER = 1000;
 export const MAX_CALORIES_NUMBER = 1000;
 
 export const VISIBLE_SLIDES = 3;
+
+export const DEFAULT_QUERY_LIMIT = 50;
+export const DEFAULT_ORDER_QUERY_LIMIT = 50;
+export const DEFAULT_REVIEW_QUERY_LIMIT = 50;
+export const DEFAULT_SORT_DIRECTION_USER = -1;
+export const DEFAULT_SORT_DIRECTION = 'desc';
+export const DEFAULT_SORT_TYPE = SortType.CreatedAt;
+export const DEFAULT_PRICE_NUMBER = 0;
