@@ -28,7 +28,8 @@ export class UserQuery {
 
   @IsEnum(UserLocation)
   @IsOptional()
-  public location: UserLocation;
+  @Transform(({ value } ) => value.split(',').map((item: string) => item))
+  public location: UserLocation[];
 
   @IsEnum(UserLevel)
   @IsOptional()

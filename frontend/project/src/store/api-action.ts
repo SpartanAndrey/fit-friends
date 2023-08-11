@@ -132,7 +132,6 @@ export const logoutAction = createAsyncThunk<void, undefined, {
        return data;
      });
 
-
     export const fetchUserSimpleAction = createAsyncThunk<UserSimple, string, {
     dispatch: AppDispatch;
     state: State;

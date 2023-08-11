@@ -152,6 +152,7 @@ export const DEFAULT_SORT_DIRECTION_USER = -1;
 export const DEFAULT_SORT_DIRECTION = 'desc';
 export const DEFAULT_SORT_TYPE = SortType.CreatedAt;
 export const DEFAULT_WORKOUTS_CATALOG_NUMBER = 12;
+export const DEFAULT_USERS_CATALOG_NUMBER = 24;
 
 export const DEFAULT_PRICE_NUMBER = 0;
 export const DEFAULT_ORDER_NUMBER = 5;
@@ -166,3 +167,4 @@ export const MIN_REVIEW_LENGTH = 100;
 export const MAX_REVIEW_LENGTH = 1024;
 export const MIN_TITLE_LENGTH = 1;
 export const MAX_TITLE_LENGTH = 15;
+export const VISIBLE_WORKOUT_TYPES_NUMBER = 5;

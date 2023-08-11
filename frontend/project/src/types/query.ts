@@ -6,7 +6,7 @@ export type UserQuery = {
   sortType?: SortType;
   page?: number;
   role?: UserRole;
-  location?: UserLocation;
+  location?: UserLocation[];
   level?: UserLevel;
   workoutType?: WorkoutType[];
 }

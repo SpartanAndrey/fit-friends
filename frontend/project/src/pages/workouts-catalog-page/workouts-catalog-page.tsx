@@ -9,6 +9,7 @@ import Header from '../../components/header/header';
 import { redirectToRoute } from '../../store/action';
 import { fetchWorkoutCatalogAction } from '../../store/api-action';
 import WorkoutsCatalogCard from '../../components/workouts-catalog-card/workouts-catalog-card';
+import { useNavigate } from 'react-router-dom';
 
 function  WorkoutsCatalogPage() {
   const scrollToTop = () => {
@@ -19,6 +20,7 @@ function  WorkoutsCatalogPage() {
   };
 
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
 
   const isWorkoutDataLoading = useAppSelector(getWorkoutCatalogLoadingStatus);
   const workouts = useAppSelector(getWorkouts);
@@ -32,12 +34,6 @@ function  WorkoutsCatalogPage() {
   if (!workouts) {
     return null;
   }
-
-  const buttonBackClickHandle = () => {
-    dispatch(redirectToRoute(AppRoute.Main));
-  }
-
-  
 
   const [query, setQuery] = useState<WorkoutCatalogQuery>({limit: DEFAULT_WORKOUTS_CATALOG_NUMBER, page: 1});
 
@@ -133,7 +129,7 @@ function  WorkoutsCatalogPage() {
                   <button
                     className="btn-flat btn-flat--underlined gym-catalog-form__btnback"
                     type="button"
-                    onClick={buttonBackClickHandle}
+                    onClick={() => {dispatch(fetchWorkoutCatalogAction()); navigate(-1);}}
                   >
                     <svg width="14" height="10" aria-hidden="true">
                       <use xlinkHref="#arrow-left"></use>
