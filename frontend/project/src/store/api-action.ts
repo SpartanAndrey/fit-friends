@@ -17,6 +17,11 @@ import { UserSimple } from '../types/user-simple.js';
 import { UserFull } from '../types/user-full.js';
 import { UserQuery, WorkoutCatalogQuery } from '../types/query.js';
 import { Workout } from '../types/workout.js';
+import { Review } from '../types/review.js';
+import { CreateReviewDto } from '../components/dto/create-review.dto.js';
+import { UpdateWorkoutDto } from '../components/dto/update-workout.dto.js';
+import { CreateOrderDto } from '../components/dto/create-order.dto.js';
+import { Order } from '../types/order.js';
 
 
 //сервис пользователей
@@ -105,7 +110,18 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     },
   );
 
-  export const fetchUserCoachAction = createAsyncThunk<UserCoach, string, {
+  export const fetchUserAction = createAsyncThunk<UserFull, string, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+   }>(
+     'users/get',
+     async (id, { dispatch, extra: api }) => {
+       const { data } = await api.get<UserFull>(`${APIRoute.Users}/${id}`);
+       return data;
+     });
+
+  export const fetchUserCoachAction = createAsyncThunk<UserCoach, undefined, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
@@ -138,7 +154,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
      async ( UpdateUserCoachDto, { dispatch, extra: api }) => {
        const { id } = UpdateUserCoachDto;
        delete UpdateUserCoachDto.id;
-       const { data } = await api.post<UserCoach>(`${APIRoute.Users}/${id}`, UpdateUserCoachDto);
+       const { data } = await api.patch<UserCoach>(`${APIRoute.Users}/${id}`, UpdateUserCoachDto);
        return data;
      });
 
@@ -151,7 +167,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
        async ( UpdateUserSimpleDto, { dispatch, extra: api }) => {
          const { id } = UpdateUserSimpleDto;
          delete UpdateUserSimpleDto.id;
-         const { data } = await api.post<UserCoach>(`${APIRoute.Users}/${id}`, UpdateUserSimpleDto);
+         const { data } = await api.patch<UserCoach>(`${APIRoute.Users}/${id}`, UpdateUserSimpleDto);
          return data;
        });
 
@@ -209,6 +225,78 @@ export const logoutAction = createAsyncThunk<void, undefined, {
         }
       });
 
+      export const fetchWorkoutAction = createAsyncThunk<Workout, string, {
+        dispatch: AppDispatch;
+        state: State;
+        extra: AxiosInstance;
+       }>(
+         'users/get',
+         async (id, { dispatch, extra: api }) => {
+           const { data } = await api.get<Workout>(`${APIRoute.Workouts}/${id}`);
+           return data;
+         });
+
+  export const updateWorkoutAction = createAsyncThunk<Workout, UpdateWorkoutDto, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+   }>(
+     'workouts/update',
+     async ( UpdateWorkoutDto, { dispatch, extra: api }) => {
+       const { id } = UpdateWorkoutDto;
+       delete UpdateWorkoutDto.id;
+       const { data } = await api.patch<Workout>(`${APIRoute.Users}/${id}`, UpdateWorkoutDto);
+       return data;
+     });
+
+//комментарии
+export const fetchReviewsAction = createAsyncThunk<Review[], string, {
+  dispatch: AppDispatch;
+  state: State;
+  extra: AxiosInstance; }>(
+    'workout/reviews',
+    async (workoutId, {extra: api}) => {
+        const {data} = await api.get<Review[]>(`${APIRoute.Reviews}/${workoutId}`);
+        return data;
+    });
+
+    export const addReviewAction = createAsyncThunk<
+    Review,
+    CreateReviewDto,
+    {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance;
+    }>(
+      'reviews/add', 
+      async (CreateReviewDto, { extra: api }) => {
+        const { data } = await api.post<Review>(`${APIRoute.Reviews}`,CreateReviewDto);
+  
+        return data;
+      },
+    );
+
+
+//заказы
+
+export const postOrderAction = createAsyncThunk<
+    Order,
+    CreateOrderDto,
+    {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance;
+    }>(
+      'orders/post', 
+      async (CreateOrderDto, { extra: api }) => {
+        const { data } = await api.post<Order>(`${APIRoute.Orders}`, CreateOrderDto);
+  
+        return data;
+      },
+    );
+
+
+//загрузка файлов
 
   export const uploadFile = createAsyncThunk<void, FileType, {
       dispatch: AppDispatch;

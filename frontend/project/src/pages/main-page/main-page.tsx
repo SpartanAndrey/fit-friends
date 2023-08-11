@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import Header from '../../components/header/header';
 import { useAppSelector } from '../../hooks';
-import { getWorkoutCatalogLoading, getWorkouts } from '../../store/workout-process/workout-selectors';
+import { getWorkoutCatalogLoadingStatus, getWorkouts } from '../../store/workout-process/workout-selectors';
 import { getUserCatalogLoading, getUsers } from '../../store/user-process/user-selectors';
 import LoadingSlider from '../../components/loading-slider/loading-slider';
 import { getRandomItems } from '../../utils/utils';
@@ -13,7 +13,7 @@ import LookForCompany from '../../components/look-for-company/look-for-company';
 
 function MainPage() {
   const isUserCatalogLoading = useAppSelector(getUserCatalogLoading);
-  const isWorkoutDataLoading = useAppSelector(getWorkoutCatalogLoading);
+  const isWorkoutDataLoading = useAppSelector(getWorkoutCatalogLoadingStatus);
   const users = useAppSelector(getUsers);
   const workouts = useAppSelector(getWorkouts);
   

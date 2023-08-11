@@ -4,13 +4,15 @@ import { LoggedUserData } from './logged-user-data.js';
 import { UserCoach } from './user-coach.js';
 import { UserFull } from './user-full.js';
 import { Workout } from './workout.js';
+import { Review } from './review.js';
 
 export type UserProcess = {
   userData: {
     authStatus: AuthorizationStatus;
     loggedUser: LoggedUserData | null;
     existsEmail: boolean;
-    userInfo: UserCoach | null;
+    coachInfo: UserCoach | null;
+    userInfo: UserFull | null;
     isLoading: boolean;
     isUserCatalogLoading: boolean;
     users: UserFull[];
@@ -19,8 +21,12 @@ export type UserProcess = {
 
 export type WorkoutProcess = {
   workoutData: {
-    isWorkoutCatalogLoading:boolean;
+    isWorkoutCatalogLoading: boolean;
+    isWorkoutLoading: boolean;
+    isReviewsLoading: boolean;
     workouts: Workout[],
+    workout: Workout | null,
+    reviews: Review[],
   }
 };
 

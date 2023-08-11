@@ -1,5 +1,5 @@
 import { Link} from 'react-router-dom';
-import UserInfo from '../../components/coach-info/coach-info';
+import CoachInfo from '../../components/coach-info/coach-info';
 import CertificateSlider from '../../components/certificate-slider/certificate-slider';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { getUserCoach, getUserLoadingStatus } from '../../store/user-process/user-selectors';
@@ -109,7 +109,7 @@ function PersonalAccountCoachPage(): JSX.Element {
           <div className="container">
             <div className="inner-page__wrapper">
               <h1 className="visually-hidden">Личный кабинет</h1>
-              {coachInfo ? <UserInfo coach={coachInfo}/> : ''}
+              {coachInfo ? <CoachInfo coach={coachInfo}/> : ''}
               <div className="inner-page__content">
                 <div className="personal-account-coach">
                   <div className="personal-account-coach__navigation">

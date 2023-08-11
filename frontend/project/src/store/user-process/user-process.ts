@@ -1,13 +1,14 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, AuthorizationStatus } from '../../constant';
 import { UserProcess } from '../../types/state';
-import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction, fetchUserAction } from '../api-action';
 
 const initialState: UserProcess = {
   userData: {
     authStatus: AuthorizationStatus.Unknown,
     loggedUser: null,
     existsEmail: false,
+    coachInfo: null,
     userInfo: null,
     isLoading: false,
     isUserCatalogLoading: false,
@@ -62,6 +63,13 @@ export const userProcess = createSlice({
         state.userData.isLoading = true;
       })
       .addCase(fetchUserCoachAction.fulfilled, (state, action) => {
+        state.userData.coachInfo = action.payload;
+        state.userData.isLoading = false;
+      })
+      .addCase(fetchUserAction.pending, (state) => {
+        state.userData.isLoading = true;
+      })
+      .addCase(fetchUserAction.fulfilled, (state, action) => {
         state.userData.userInfo = action.payload;
         state.userData.isLoading = false;
       })
@@ -77,3 +85,4 @@ export const userProcess = createSlice({
       });
   }
 });
+

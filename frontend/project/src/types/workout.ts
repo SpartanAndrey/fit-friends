@@ -1,9 +1,9 @@
 import { UserLevel, WorkoutGender, WorkoutTime, WorkoutType } from "../constant";
 
 export type Workout = {
-  id: number;
+  id?: number;
   title: string;
-  backgroundImage: string;
+  backgroundImage?: string;
   level: UserLevel;
   type: WorkoutType;
   time: WorkoutTime;
