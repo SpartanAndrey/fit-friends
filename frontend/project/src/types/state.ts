@@ -5,6 +5,7 @@ import { UserCoach } from './user-coach.js';
 import { UserFull } from './user-full.js';
 import { Workout } from './workout.js';
 import { Review } from './review.js';
+import { UserSimple } from './user-simple.js';
 
 export type UserProcess = {
   userData: {
@@ -13,6 +14,8 @@ export type UserProcess = {
     existsEmail: boolean;
     coachInfo: UserCoach | null;
     userInfo: UserFull | null;
+    userOtherInfo: UserFull | null;
+    userSimpleInfo: UserSimple | null;
     isLoading: boolean;
     isUserCatalogLoading: boolean;
     users: UserFull[];

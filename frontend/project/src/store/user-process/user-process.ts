@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, AuthorizationStatus } from '../../constant';
 import { UserProcess } from '../../types/state';
-import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction, fetchUserAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction, fetchUserAction, fetchUserSimpleAction, fetchUserOtherAction } from '../api-action';
 
 const initialState: UserProcess = {
   userData: {
@@ -9,7 +9,9 @@ const initialState: UserProcess = {
     loggedUser: null,
     existsEmail: false,
     coachInfo: null,
+    userSimpleInfo: null,
     userInfo: null,
+    userOtherInfo: null,
     isLoading: false,
     isUserCatalogLoading: false,
     users: [],
@@ -66,10 +68,24 @@ export const userProcess = createSlice({
         state.userData.coachInfo = action.payload;
         state.userData.isLoading = false;
       })
+      .addCase(fetchUserSimpleAction.pending, (state) => {
+        state.userData.isLoading = true;
+      })
+      .addCase(fetchUserSimpleAction.fulfilled, (state, action) => {
+        state.userData.userSimpleInfo = action.payload;
+        state.userData.isLoading = false;
+      })
       .addCase(fetchUserAction.pending, (state) => {
         state.userData.isLoading = true;
       })
       .addCase(fetchUserAction.fulfilled, (state, action) => {
+        state.userData.userInfo = action.payload;
+        state.userData.isLoading = false;
+      })
+      .addCase(fetchUserOtherAction.pending, (state) => {
+        state.userData.isLoading = true;
+      })
+      .addCase(fetchUserOtherAction.fulfilled, (state, action) => {
         state.userData.userInfo = action.payload;
         state.userData.isLoading = false;
       })

@@ -1,7 +1,5 @@
-const CertificateSlider = () => {
-  return (
-    <div></div>
-  );
-};
+const CertificateSlider = () => (
+  <div></div>
+);
 
 export default CertificateSlider;

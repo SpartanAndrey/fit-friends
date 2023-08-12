@@ -25,7 +25,7 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
     const { name, value } = evt.target;
     setEditData({ ...editData, [name]: value });
   };
-  
+
   const [choosenWorkoutTypes, setChoosenWorkoutTypes] = useState<WorkoutType[]>(coach.workoutType);
 
   const [isNotWorkoutType, setIsNotWorkoutType] = useState(!(coach.workoutType.length >= 1 && coach.workoutType.length <= 3));
@@ -104,7 +104,21 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
       <div className="user-info-edit__header">
         <div className="input-load-avatar">
           <label>
-            <input className="visually-hidden" type="file" name="user-photo-1" accept="image/png, image/jpeg" /><span className="input-load-avatar__avatar"><img src="img/content/user-photo-1.png" srcSet="img/content/user-photo-1@2x.png 2x" width="98" height="98" alt="user photo" /></span>
+            <input
+              className="visually-hidden"
+              type="file"
+              name="user-photo-1"
+              accept="image/png, image/jpeg"
+            />
+            <span className="input-load-avatar__avatar">
+              <img
+                src="img/content/user-photo-1.png"
+                srcSet="img/content/user-photo-1@2x.png 2x"
+                width="98"
+                height="98"
+                alt="user photo"
+              />
+            </span>
           </label>
         </div>
         <div className="user-info-edit__controls">
@@ -120,55 +134,84 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
           </button>
         </div>
       </div>
-      <form className="user-info-edit__form" action="#" method="post" onSubmit={submitHandle}>
-        <button className="btn-flat btn-flat--underlined user-info-edit__save-button" type="submit" aria-label={isEdit ? 'Сохранить' : 'Редактировать'}>
+      <form
+        className="user-info-edit__form"
+        action="#"
+        method="post"
+        onSubmit={submitHandle}
+      >
+        <button
+          className="btn-flat btn-flat--underlined user-info-edit__save-button"
+          type="submit"
+          aria-label={isEdit ? 'Сохранить' : 'Редактировать'}
+        >
           <svg width="12" height="12" aria-hidden="true">
             <use xlinkHref="#icon-edit"></use>
-          </svg><span>{isEdit ? 'Сохранить' : 'Редактировать'}</span>
+          </svg>
+          <span>{isEdit ? 'Сохранить' : 'Редактировать'}</span>
         </button>
         <div className="user-info-edit__section">
           <h2 className="user-info-edit__title">Обо мне</h2>
           <div className="custom-input user-info-edit__input">
-            <label><span className="custom-input__label">Имя</span><span className="custom-input__wrapper">
-              <input
-                readOnly={!isEdit}
-                pattern={NAME_PATTERN}
-                required={true}
-                type="text"
-                minLength={NameLength.MinLength}
-                maxLength={NameLength.MaxLength}
-                onChange={fieldChangeHandle}
-                value={coach.name}
-                name="name"
-              /></span>
+            <label>
+              <span className="custom-input__label">Имя</span>
+              <span className="custom-input__wrapper">
+                <input
+                  readOnly={!isEdit}
+                  pattern={NAME_PATTERN}
+                  required
+                  type="text"
+                  minLength={NameLength.MinLength}
+                  maxLength={NameLength.MaxLength}
+                  onChange={fieldChangeHandle}
+                  value={coach.name}
+                  name="name"
+                />
+              </span>
             </label>
           </div>
           <div className="custom-textarea user-info-edit__textarea">
-            <label><span className="custom-textarea__label">Описание</span>
+            <label>
+              <span className="custom-textarea__label">Описание</span>
               <textarea
                 readOnly={!isEdit}
                 onChange={fieldChangeHandle}
                 minLength={DescriptionLength.MinLength}
                 maxLength={DescriptionLength.MaxLength}
                 name="description"
-                value={coach?.description}>{coach?.description}
+                value={coach?.description}
+              >
+                {coach?.description}
               </textarea>
             </label>
           </div>
         </div>
         <div className="user-info-edit__section user-info-edit__section--status">
-          <h2 className="user-info-edit__title user-info-edit__title--status">Статус</h2>
+          <h2 className="user-info-edit__title user-info-edit__title--status">
+            Статус
+          </h2>
           <div className="custom-toggle custom-toggle--switch user-info-edit__toggle">
             <label>
-              <input disabled={!isEdit} type="checkbox" name="isReadyToCoach" checked={isReady} onChange={() => setIsReady(!isReady)} /><span className="custom-toggle__icon">
+              <input
+                disabled={!isEdit}
+                type="checkbox"
+                name="isReadyToCoach"
+                checked={isReady}
+                onChange={() => setIsReady(!isReady)}
+              />
+              <span className="custom-toggle__icon">
                 <svg width="9" height="6" aria-hidden="true">
                   <use xlinkHref="#arrow-check"></use>
-                </svg></span><span className="custom-toggle__label">Готов тренировать</span>
+                </svg>
+              </span>
+              <span className="custom-toggle__label">Готов тренировать</span>
             </label>
           </div>
         </div>
         <div className="user-info-edit__section">
-          <h2 className="user-info-edit__title user-info-edit__title--specialization">Специализация</h2>
+          <h2 className="user-info-edit__title user-info-edit__title--specialization">
+            Специализация
+          </h2>
           <div className="specialization-checkbox user-info-edit__specialization">
             {WORKOUT_TYPES.map((el) => (
               <div className="btn-checkbox" key={el}>
@@ -188,17 +231,28 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
               </div>
             ))}
           </div>
-          {isNotWorkoutType && isEdit && <span className="custom-input__error">Необходимо выбрать 1-3 значений</span>}
+          {isNotWorkoutType && isEdit && (
+            <span className="custom-input__error">
+              Необходимо выбрать 1-3 значений
+            </span>
+          )}
         </div>
         <div
-          className={`${isEdit ? '' : 'custom-select--readonly'} custom-select ${isOpened.location ? 'is-open' : 'custom-select--not-selected'} user-info${isEdit ? '-edit' : ''}__select`}>
+          className={`${
+            isEdit ? '' : 'custom-select--readonly'
+          } custom-select ${
+            isOpened.location ? 'is-open' : 'custom-select--not-selected'
+          } user-info${isEdit ? '-edit' : ''}__select`}
+        >
           <span className="custom-select__label">Локация</span>
-          <div className="custom-select__placeholder">ст. м. {currentLocation}</div>
+          <div className="custom-select__placeholder">
+            ст. м. {currentLocation}
+          </div>
           <button
             className="custom-select__button"
             type="button"
             aria-label="Выберите одну из опций"
-            onClick={()=>handleToggleButtonClick('location')}
+            onClick={() => handleToggleButtonClick('location')}
             disabled={!isEdit}
           >
             <span className="custom-select__text">{currentLocation}</span>
@@ -209,29 +263,34 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
             </span>
           </button>
           <ul className="custom-select__list" role="listbox">
-            {LOCATIONS.map((el) =>
-              (
-                <li
-                  key={el}
-                  role="option"
-                  tabIndex={0}
-                  className="custom-select__item"
-                  aria-selected={currentLocation === el}
-                  onClick={locationChangeHandle}
-                >
-                  {el}
-                </li>
-              ))}
+            {LOCATIONS.map((el) => (
+              <li
+                key={el}
+                role="option"
+                tabIndex={0}
+                className="custom-select__item"
+                aria-selected={currentLocation === el}
+                onClick={locationChangeHandle}
+              >
+                {el}
+              </li>
+            ))}
           </ul>
         </div>
-        <div className={`${isEdit ? '' : 'custom-select--readonly'} custom-select ${isOpened.gender? 'is-open' : 'custom-select--not-selected'} user-info${isEdit ? '-edit' : ''}__select`}>
+        <div
+          className={`${
+            isEdit ? '' : 'custom-select--readonly'
+          } custom-select ${
+            isOpened.gender ? 'is-open' : 'custom-select--not-selected'
+          } user-info${isEdit ? '-edit' : ''}__select`}
+        >
           <span className="custom-select__label">Пол</span>
           <div className="custom-select__placeholder">{currentGender}</div>
           <button
             className="custom-select__button"
             type="button"
             aria-label="Выберите одну из опций"
-            onClick={()=>handleToggleButtonClick('gender')}
+            onClick={() => handleToggleButtonClick('gender')}
             disabled={!isEdit}
           >
             <span className="custom-select__text">{currentGender}</span>
@@ -242,29 +301,34 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
             </span>
           </button>
           <ul className="custom-select__list" role="listbox">
-            {GENDERS.map((el) =>
-              (
-                <li
-                  key={el}
-                  role="option"
-                  tabIndex={0}
-                  className="custom-select__item"
-                  aria-selected={currentGender === el}
-                  onClick={genderChangeHandle}
-                >
-                  {el}
-                </li>
-              ))}
+            {GENDERS.map((el) => (
+              <li
+                key={el}
+                role="option"
+                tabIndex={0}
+                className="custom-select__item"
+                aria-selected={currentGender === el}
+                onClick={genderChangeHandle}
+              >
+                {el}
+              </li>
+            ))}
           </ul>
         </div>
-        <div className={`${isEdit ? '' : 'custom-select--readonly'} custom-select  ${isOpened.level ? 'is-open' : 'custom-select--not-selected'} user-info${isEdit ? '-edit' : ''}__select`}>
+        <div
+          className={`${
+            isEdit ? '' : 'custom-select--readonly'
+          } custom-select  ${
+            isOpened.level ? 'is-open' : 'custom-select--not-selected'
+          } user-info${isEdit ? '-edit' : ''}__select`}
+        >
           <span className="custom-select__label">Уровень</span>
           <div className="custom-select__placeholder">{currentLevel}</div>
           <button
             className="custom-select__button"
             type="button"
             aria-label="Выберите одну из опций"
-            onClick={()=>handleToggleButtonClick('level')}
+            onClick={() => handleToggleButtonClick('level')}
             disabled={!isEdit}
           >
             <span className="custom-select__text"></span>
@@ -275,19 +339,18 @@ const CoachInfo = ({ coach }: Props): JSX.Element => {
             </span>
           </button>
           <ul className="custom-select__list" role="listbox">
-            {LEVELS.map((el) =>
-              (
-                <li
-                  key={el}
-                  role="option"
-                  tabIndex={0}
-                  className="custom-select__item"
-                  aria-selected={currentLevel === el}
-                  onClick={levelChangeHandle}
-                >
-                  {el}
-                </li>
-              ))}
+            {LEVELS.map((el) => (
+              <li
+                key={el}
+                role="option"
+                tabIndex={0}
+                className="custom-select__item"
+                aria-selected={currentLevel === el}
+                onClick={levelChangeHandle}
+              >
+                {el}
+              </li>
+            ))}
           </ul>
         </div>
       </form>

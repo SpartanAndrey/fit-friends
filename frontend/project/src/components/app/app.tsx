@@ -6,6 +6,10 @@ import LoginPage from '../../pages/login-page/login-page';
 import NotFoundPage from '../../pages/not-found-page/not-found-page';
 import QuestionnaireCoachPage from '../../pages/questionnaire-coach-page/questionnaire-coach-page';
 import QuestionnaireUserPage from '../../pages/questionnaire-user-page/questionnaire-user-page';
+import PersonalAccountCoachPage from '../../pages/personal-account-coach-page/personal-account-coach-page';
+import UsersCatalogPage from '../../pages/users-catalog-page/users-catalog-page';
+import UserCardPage from '../../pages/user-card-page/user-card-page';
+import WorkoutsCatalogPage from '../../pages/workouts-catalog-page/workouts-catalog-page';
 
 
 function App(): JSX.Element {
@@ -31,6 +35,22 @@ function App(): JSX.Element {
         <Route
           path={AppRoute.Login}
           element={<LoginPage />}
+        />
+        <Route
+          path={AppRoute.PersonalAccountCoach}
+          element={<PersonalAccountCoachPage />}
+        />
+        <Route
+          path={AppRoute.UsersCatalog}
+          element={<UsersCatalogPage />}
+        />
+        <Route
+          path={AppRoute.UserCard}
+          element={<UserCardPage />}
+        />
+        <Route
+          path={AppRoute.WorkoutsCatalog}
+          element={<WorkoutsCatalogPage />}
         />
         <Route
           path={AppRoute.NotFound}

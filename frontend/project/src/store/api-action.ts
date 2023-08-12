@@ -5,9 +5,7 @@ import { APIRoute, DEFAULT_QUERY_LIMIT, DEFAULT_SORT_DIRECTION, DEFAULT_SORT_DIR
 import { AuthData } from '../types/auth-data.js';
 import { LoggedUserData } from '../types/logged-user-data.js';
 import { saveToken, dropToken } from '../services/token';
-import { QuestionnaireCoachData } from '../types/questionnaire-coach-data.js';
 import { FileType } from '../types/file-type-data.js';
-import { RegisteredUserData } from '../types/registered-user-data.js';
 import { CreateUserCoachDto } from '../components/dto/create-user-coach.dto.js';
 import { CreateUserSimpleDto } from '../components/dto/create-user-simple.dto.js';
 import { UserCoach } from '../types/user-coach.js';
@@ -22,6 +20,7 @@ import { CreateReviewDto } from '../components/dto/create-review.dto.js';
 import { UpdateWorkoutDto } from '../components/dto/update-workout.dto.js';
 import { CreateOrderDto } from '../components/dto/create-order.dto.js';
 import { Order } from '../types/order.js';
+import { ChangeFriendDto } from '../components/dto/change-friend.dto.js';
 
 
 //сервис пользователей
@@ -86,7 +85,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     state: State;
     extra: AxiosInstance;
   }>(
-    'users/register', 
+    'users/register/coach', 
     async (CreateUserCoachDto, { extra: api }) => {
       const { data } = await api.post<LoggedUserData>(`${APIRoute.Register}`,CreateUserCoachDto);
 
@@ -102,7 +101,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
     state: State;
     extra: AxiosInstance;
   }>(
-    'users/register', 
+    'users/register/simple', 
     async (CreateUserSimpleDto, { extra: api }) => {
       const { data } = await api.post<LoggedUserData>(`${APIRoute.Register}`, CreateUserSimpleDto);
 
@@ -121,7 +120,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
        return data;
      });
 
-  export const fetchUserCoachAction = createAsyncThunk<UserCoach, undefined, {
+  export const fetchUserCoachAction = createAsyncThunk<UserCoach, string, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
@@ -143,13 +142,24 @@ export const logoutAction = createAsyncThunk<void, undefined, {
        return data;
      });
 
+     export const fetchUserOtherAction = createAsyncThunk<UserFull, string, {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance;
+     }>(
+       'users/get/other',
+       async (id, { dispatch, extra: api }) => {
+         const { data } = await api.get<UserFull>(`${APIRoute.Users}/${id}`);
+         return data;
+       });
+
      
   export const updateUserCoachAction = createAsyncThunk<UserCoach, UpdateUserCoachDto, {
     dispatch: AppDispatch;
     state: State;
     extra: AxiosInstance;
    }>(
-     'users/update',
+     'users/update/coach',
      async ( UpdateUserCoachDto, { dispatch, extra: api }) => {
        const { id } = UpdateUserCoachDto;
        delete UpdateUserCoachDto.id;
@@ -162,7 +172,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
       state: State;
       extra: AxiosInstance;
      }>(
-       'users/update',
+       'users/update/simple',
        async ( UpdateUserSimpleDto, { dispatch, extra: api }) => {
          const { id } = UpdateUserSimpleDto;
          delete UpdateUserSimpleDto.id;
@@ -193,6 +203,32 @@ export const logoutAction = createAsyncThunk<void, undefined, {
           return Promise.reject(error);
         }
       });
+
+      export const addFriendAction = createAsyncThunk<{userId: string; friendId: string}, ChangeFriendDto, {
+        dispatch: AppDispatch;
+        state: State;
+        extra: AxiosInstance;
+       }>(
+         'user/friends/add',
+         async (ChangeFriendDto, { dispatch, extra: api }) => {
+           const { userId } = ChangeFriendDto;
+           delete ChangeFriendDto.userId;
+           const { data } = await api.patch<{userId: string; friendId: string}>(`${APIRoute.Users}/${userId}/friends/add`, ChangeFriendDto);
+           return data;
+         });
+
+         export const removeFriendAction = createAsyncThunk<{userId: string; friendId: string}, ChangeFriendDto, {
+          dispatch: AppDispatch;
+          state: State;
+          extra: AxiosInstance;
+         }>(
+           'user/friends/remove',
+           async (ChangeFriendDto, { dispatch, extra: api }) => {
+             const { userId } = ChangeFriendDto;
+             delete ChangeFriendDto.userId;
+             const { data } = await api.patch<{userId: string; friendId: string}>(`${APIRoute.Users}/${userId}/friends/remove`, ChangeFriendDto);
+             return data;
+           });
 
   //сервис тренировок
 
@@ -229,7 +265,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
         state: State;
         extra: AxiosInstance;
        }>(
-         'users/get',
+         'workouts/get',
          async (id, { dispatch, extra: api }) => {
            const { data } = await api.get<Workout>(`${APIRoute.Workouts}/${id}`);
            return data;

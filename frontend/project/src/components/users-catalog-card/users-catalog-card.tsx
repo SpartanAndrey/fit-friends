@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom';
+import { AppRoute } from '../../constant';
 import { UserFull } from '../../types/user-full';
 
 type Props = {
@@ -5,6 +7,9 @@ type Props = {
 }
 
 function UsersCatalogCard({user}: Props): JSX.Element {
+
+  const path = `${AppRoute.Users}/${user.id}`;
+
   return(
     <li className="users-catalog__item">
       <div className={`thumbnail-user thumbnail-user--role-${user.role}`}>
@@ -30,15 +35,15 @@ function UsersCatalogCard({user}: Props): JSX.Element {
         </div>
         <ul className="thumbnail-user__hashtags-list">
           {user.workoutType.map((type) => (
-            <li className="thumbnail-user__hashtags-item">
+            <li className="thumbnail-user__hashtags-item" key={type}>
               <div className="hashtag thumbnail-user__hashtag"><span>#{type}</span></div>
             </li>
           ))}
         </ul>
-        <a className="btn btn--medium thumbnail-user__button" href="#">Подробнее</a>
+        <Link className="btn btn--medium thumbnail-user__button" to={path}>Подробнее</Link>
       </div>
     </li>
-  )
+  );
 }
 
 export default UsersCatalogCard;

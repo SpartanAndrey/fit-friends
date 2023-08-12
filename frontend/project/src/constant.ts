@@ -8,6 +8,8 @@ export enum AppRoute {
   PersonalAccountCoach = '/coach-personal-account',
   WorkoutsCatalog = '/workouts-catalog',
   UsersCatalog = '/users-catalog',
+  Users = '/users',
+  UserCard = '/users/:id',
   NotFound ='*',
   Upload = 'files/upload'
 }
