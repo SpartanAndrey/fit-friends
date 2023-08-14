@@ -1,11 +1,13 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { getUser, getUserLoadingStatus, getUserOther } from "../../store/user-process/user-selectors";
-import { useEffect } from "react";
-import LoadingSlider from "../../components/loading-slider/loading-slider";
-import NotFoundPage from "../not-found-page/not-found-page";
-import { addFriendAction, fetchUserAction, fetchUserOtherAction, removeFriendAction } from "../../store/api-action";
-import Header from "../../components/header/header";
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { getUser, getUserLoadingStatus, getUserOther } from '../../store/user-process/user-selectors';
+import { useEffect, useState } from 'react';
+import LoadingSlider from '../../components/loading-slider/loading-slider';
+import NotFoundPage from '../not-found-page/not-found-page';
+import { addFriendAction, fetchUserAction, fetchUserOtherAction, removeFriendAction } from '../../store/api-action';
+import Header from '../../components/header/header';
+import PopupMap from '../../components/popup-map/popup-map';
+import PopupWindow from '../../components/popup-window/popup-window';
 
 function UserCardPage(): JSX.Element {
   const dispatch = useAppDispatch();
@@ -49,6 +51,12 @@ function UserCardPage(): JSX.Element {
     }
   };
 
+  const [showModalMap, setShowModalMap] = useState(false);
+  
+  const togglePopupMap = () => {
+    setShowModalMap(!showModalMap);
+  };
+
   return (
     <div className="wrapper">
       <Header />
@@ -70,12 +78,16 @@ function UserCardPage(): JSX.Element {
                         <h2 className="user-card__title">{userOther.name}</h2>
                       </div>
                       <div className="user-card__label">
-                        <Link to=""><svg className="user-card-coach__icon-location" width="12" height="14" aria-hidden="true">
+                        <Link to='/' onClick={(evt)=> {evt.preventDefault(); setShowModalMap(!showModalMap);}}><svg className="user-card-coach__icon-location" width="12" height="14" aria-hidden="true">
                           <use xlinkHref="#icon-location"></use>
                         </svg><span>{userOther.location}</span></Link>
+                        {showModalMap &&
+                            <PopupWindow handleClose={togglePopupMap}>
+                              <PopupMap userName={userOther.name} location={userOther.location} handleClose={togglePopupMap} />
+                            </PopupWindow>}
                       </div>
                       {userOther.isReadyToTrain && <div className="user-card__status"><span>Готов к тренировке</span></div>}
-                      {!userOther.isReadyToTrain && <div className="user-card-coach-2__status user-card-coach-2__status--check"><span>не готов тренироваться</span></div>}
+                      {!userOther.isReadyToTrain && <div className="user-card-coach-2__status user-card-coach-2__status--check"><span>е готов тренироваться</span></div>}
                       <div className="user-card__text">
                         {userOther.description}
                       </div>

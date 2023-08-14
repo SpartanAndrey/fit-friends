@@ -13,7 +13,7 @@ import { UpdateUserCoachDto } from '../components/dto/update-user-coach.dto.js';
 import { UpdateUserSimpleDto } from '../components/dto/update-user-simple.dto.js';
 import { UserSimple } from '../types/user-simple.js';
 import { UserFull } from '../types/user-full.js';
-import { UserQuery, WorkoutCatalogQuery } from '../types/query.js';
+import { UserQuery, WorkoutCatalogQuery, WorkoutListQuery } from '../types/query.js';
 import { Workout } from '../types/workout.js';
 import { Review } from '../types/review.js';
 import { CreateReviewDto } from '../components/dto/create-review.dto.js';
@@ -21,6 +21,8 @@ import { UpdateWorkoutDto } from '../components/dto/update-workout.dto.js';
 import { CreateOrderDto } from '../components/dto/create-order.dto.js';
 import { Order } from '../types/order.js';
 import { ChangeFriendDto } from '../components/dto/change-friend.dto.js';
+import { CreateRequestWorkoutDto } from '../components/dto/create-request-workout-dto.js';
+import { RequestWorkout } from '../types/request-workout.js';
 
 
 //сервис пользователей
@@ -249,9 +251,9 @@ export const logoutAction = createAsyncThunk<void, undefined, {
           const caloriesMax = query && query.caloriesMax ? `caloriesMax=${query.caloriesMax}&` : '';
           const ratingMin = query && query.ratingMin ? `ratingMin=${query.ratingMin}&` : '';
           const ratingMax = query && query.ratingMax ? `ratingMax=${query.ratingMax}&` : '';
-          const types = query && query.types ? `trainingType=${query.types.join(',').trim()}` : '';
+          const types = query && query.types ? `workoutType=${query.types.join(',').trim()}` : '';
 
-          const {data} = await api.get<Workout[]>(`${APIRoute.Users}?${limit}${sortDirection}${SortType}${page}${types}${priceMin}${priceMax}${caloriesMin}${caloriesMax}${ratingMin}${ratingMax}`);
+          const {data} = await api.get<Workout[]>(`${APIRoute.Workouts}?${limit}${sortDirection}${SortType}${page}${types}${priceMin}${priceMax}${caloriesMin}${caloriesMax}${ratingMin}${ratingMax}`);
           return data;
 
         } catch (error) {
@@ -259,6 +261,35 @@ export const logoutAction = createAsyncThunk<void, undefined, {
           return Promise.reject(error);
         }
       });
+
+      export const fetchCoachWorkoutsAction = createAsyncThunk<Workout[], WorkoutListQuery | undefined, {
+        dispatch: AppDispatch;
+        state: State;
+        extra: AxiosInstance; }>(
+          'workouts/coach',
+          async (query, {extra: api}) => {
+            try {
+              const limit = query && query.limit ? `limit=${query.limit}&` : `limit=${DEFAULT_QUERY_LIMIT}&`;
+              const sortDirection = query && query.sortDirection ? `sortDirection=${query.sortDirection}&` : `limit=${DEFAULT_SORT_DIRECTION}&`;
+              const SortType = query && query.sortType ? `sortType=${query.sortType}&` : `limit=${DEFAULT_SORT_TYPE}&`;
+              const page = query && query.page ? `page=${query.page}&` : 'page=1&';
+              const priceMin = query && query.priceMin ? `priceMin=${query.priceMin}&` : '';
+              const priceMax = query && query.priceMax ? `priceMax=${query.priceMax}&` : '';
+              const caloriesMin = query && query.caloriesMin ? `caloriesMin=${query.caloriesMin}&` : '';
+              const caloriesMax = query && query.caloriesMax ? `caloriesMax=${query.caloriesMax}&` : '';
+              const ratingMin = query && query.ratingMin ? `ratingMin=${query.ratingMin}&` : '';
+              const ratingMax = query && query.ratingMax ? `ratingMax=${query.ratingMax}&` : '';
+              const types = query && query.types ? `workoutType=${query.types.join(',').trim()}` : '';
+              const times = query && query.times ? `workoutTime=${query.times.join(',').trim()}` : '';
+    
+              const {data} = await api.get<Workout[]>(`${APIRoute.Workouts}/coach/${query?.coachId}?${limit}${sortDirection}${SortType}${page}${types}${times}${priceMin}${priceMax}${caloriesMin}${caloriesMax}${ratingMin}${ratingMax}`);
+              return data;
+    
+            } catch (error) {
+    
+              return Promise.reject(error);
+            }
+          });
 
       export const fetchWorkoutAction = createAsyncThunk<Workout, string, {
         dispatch: AppDispatch;
@@ -313,7 +344,6 @@ export const fetchReviewsAction = createAsyncThunk<Review[], string, {
 
 
 //заказы
-
 export const postOrderAction = createAsyncThunk<
     Order,
     CreateOrderDto,
@@ -330,6 +360,23 @@ export const postOrderAction = createAsyncThunk<
       },
     );
 
+
+// запросы на персональную тренировку
+export const createRequestWorkoutAction = createAsyncThunk<
+    RequestWorkout,
+    CreateRequestWorkoutDto,
+    {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance;
+    }>(
+      'requests/create', 
+      async (CreateRequestWorkoutDto, { extra: api }) => {
+        const { data } = await api.post<RequestWorkout>(`${APIRoute.Requests}/create`, CreateRequestWorkoutDto);
+  
+        return data;
+      },
+    );
 
 //загрузка файлов
 

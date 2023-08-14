@@ -5,6 +5,8 @@ import { Workout } from '../../types/workout';
 
 export const getWorkouts = (state: State): Workout[] => state[NameSpace.Workout].workoutData.workouts;
 export const getWorkoutCatalogLoadingStatus = (state: State): boolean => state[NameSpace.Workout].workoutData.isWorkoutCatalogLoading;
+export const getCoachWorkoutsLoadingStatus = (state: State): boolean => state[NameSpace.Workout].workoutData.isCoachWorkoutsLoading;
+export const getCoachWorkouts = (state: State): Workout[] => state[NameSpace.Workout].workoutData.coachWorkouts;
 export const getWorkout = (state: State): Workout | null => state[NameSpace.Workout].workoutData.workout;
 export const getWorkoutLoadingStatus = (state: State): boolean => state[NameSpace.Workout].workoutData.isWorkoutLoading;
 export const getReviews = (state: State): Review[] => state[NameSpace.Workout].workoutData.reviews;

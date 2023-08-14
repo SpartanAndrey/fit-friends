@@ -1,3 +1,5 @@
+import { Location } from "./types/user-full";
+
 export enum AppRoute {
   Intro = '/intro',
   Main = '/',
@@ -19,6 +21,7 @@ export enum APIRoute {
   Workouts = '/workouts',
   Reviews = '/reviews',
   Orders = '/orders',
+  Requests = '/requests',
   Login = '/users/login',
   Logout = '/users/logout',
   Register = '/users/register',
@@ -142,6 +145,29 @@ export enum PaymentType {
   Mir = 'Mir',
   Umoney = 'Umoney',
 }
+
+export const LOCATION_DATA: Location[] = [
+  {
+    name: UserLocation.Petrogradskaya,
+    location: [59.966399, 30.311511]
+  },
+  {
+    name: UserLocation.Pionerskaya,
+    location: [59.950190, 30.288335]
+  },
+  {
+    name: UserLocation.Sportivnaya,
+    location: [60.002517, 30.296671]
+  },
+  {
+    name:UserLocation.Udelnaya,
+    location: [60.016681, 30.315617]
+  },
+  {
+    name: UserLocation.Zvezdnaya,
+    location: [59.833233, 30.349492]
+  },
+];
 
 export const PAYMENT_TYPES: string[] = Object.values(PaymentType);
 

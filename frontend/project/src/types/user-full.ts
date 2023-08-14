@@ -1,3 +1,4 @@
+import { LatLngExpression } from 'leaflet';
 import { UserGender, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType } from '../constant';
 
 export  type UserFull = {
@@ -40,4 +41,9 @@ export interface Notification {
   date: Date;
   text: string;
 }
+
+export type Location = {
+  name: UserLocation;
+  location: LatLngExpression;
+};
 

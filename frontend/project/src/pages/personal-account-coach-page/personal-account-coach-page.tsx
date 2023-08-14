@@ -16,7 +16,7 @@ function PersonalAccountCoachPage(): JSX.Element {
 
   const loadingStatus = useAppSelector(getUserLoadingStatus)
 
-  const [certificates, setCertificates] = useState<string[]>([]);
+  const [, setCertificates] = useState<string[]>([]);
 
   useEffect(() => {
     if (coachInfo && coachInfo.certificates) {

@@ -38,7 +38,7 @@ export type WorkoutListQuery = {
   caloriesMax?: number;
   ratingMin?: number;
   ratingMax?: number;
-  times: WorkoutTime[];
+  times?: WorkoutTime[];
   coachId?: string;
 }
 

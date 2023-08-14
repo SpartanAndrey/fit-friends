@@ -25,8 +25,10 @@ export type UserProcess = {
 export type WorkoutProcess = {
   workoutData: {
     isWorkoutCatalogLoading: boolean;
+    isCoachWorkoutsLoading: boolean;
     isWorkoutLoading: boolean;
     isReviewsLoading: boolean;
+    coachWorkouts: Workout[];
     workouts: Workout[],
     workout: Workout | null,
     reviews: Review[],

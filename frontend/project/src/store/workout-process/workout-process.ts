@@ -1,13 +1,15 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace } from '../../constant';
 import { WorkoutProcess } from '../../types/state';
-import { fetchReviewsAction, fetchWorkoutAction, fetchWorkoutCatalogAction } from '../api-action';
+import { fetchCoachWorkoutsAction, fetchReviewsAction, fetchWorkoutAction, fetchWorkoutCatalogAction } from '../api-action';
 
 const initialState: WorkoutProcess = {
   workoutData: {
     isWorkoutCatalogLoading: false,
+    isCoachWorkoutsLoading: false,
     isWorkoutLoading: false,
     isReviewsLoading: false,
+    coachWorkouts: [],
     workouts: [],
     workout: null,
     reviews: [],
@@ -29,6 +31,16 @@ export const workoutProcess = createSlice({
       })
       .addCase(fetchWorkoutCatalogAction.rejected, (state) => {
         state.workoutData.isWorkoutCatalogLoading = false;
+      })
+      .addCase(fetchCoachWorkoutsAction.pending, (state) => {
+        state.workoutData.isCoachWorkoutsLoading = true;
+      })
+      .addCase(fetchCoachWorkoutsAction.fulfilled, (state, action) => {
+        state.workoutData.coachWorkouts = action.payload;
+        state.workoutData.isCoachWorkoutsLoading = false;
+      })
+      .addCase(fetchCoachWorkoutsAction.rejected, (state) => {
+        state.workoutData.isCoachWorkoutsLoading = false;
       })
       .addCase(fetchWorkoutAction.pending, (state) => {
         state.workoutData.isWorkoutLoading = true;
