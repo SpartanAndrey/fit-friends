@@ -97,6 +97,7 @@ function  WorkoutsCatalogPage() {
         evt.target.setAttribute('checked', 'true');
       }
     }
+    
     if (name === 'sort') {
       evt.target.setAttribute('checked', 'true');
       if (value === 'sort_asc') {

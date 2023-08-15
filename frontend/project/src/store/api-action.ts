@@ -13,7 +13,7 @@ import { UpdateUserCoachDto } from '../components/dto/update-user-coach.dto.js';
 import { UpdateUserSimpleDto } from '../components/dto/update-user-simple.dto.js';
 import { UserSimple } from '../types/user-simple.js';
 import { UserFull } from '../types/user-full.js';
-import { UserQuery, WorkoutCatalogQuery, WorkoutListQuery } from '../types/query.js';
+import { OrderQuery, UserQuery, WorkoutCatalogQuery, WorkoutListQuery } from '../types/query.js';
 import { Workout } from '../types/workout.js';
 import { Review } from '../types/review.js';
 import { CreateReviewDto } from '../components/dto/create-review.dto.js';
@@ -23,6 +23,7 @@ import { Order } from '../types/order.js';
 import { ChangeFriendDto } from '../components/dto/change-friend.dto.js';
 import { CreateRequestWorkoutDto } from '../components/dto/create-request-workout-dto.js';
 import { RequestWorkout } from '../types/request-workout.js';
+import { CreateWorkoutDto } from '../components/dto/create-workout.dto.js';
 
 
 //сервис пользователей
@@ -206,6 +207,31 @@ export const logoutAction = createAsyncThunk<void, undefined, {
         }
       });
 
+  export const fetchUserFriendsAction = createAsyncThunk<UserFull[], UserQuery | undefined, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance; }>(
+      'user/friends',
+      async (query, {extra: api}) => {
+        try {
+          const limit = query && query.limit ? `limit=${query.limit}&` : `limit=${DEFAULT_QUERY_LIMIT}&`;
+          const sortDirection = query && query.sortDirection ? `sortDirection=${query.sortDirection}&` : `limit=${DEFAULT_SORT_DIRECTION_USER}&`;
+          const page = query && query.page ? `page=${query.page}&` : 'page=1&';
+          const role = query && query.role ? `role=${query.role}&` : '';
+          const location = query && query.location ? `location=${query.location}&` : '';
+          const level = query && query.level ? `level=${query.level}&` : '';
+          const type = query && query.workoutType ? `workoutType=${query.workoutType.join(',').trim()}` : '';
+          const id = query && query.userId ? query.userId : '';
+
+          const {data} = await api.get<UserFull[]>(`${APIRoute.Users}/${id}/friends?${limit}${sortDirection}${page}${role}${level}${location}${type}`);
+          return data;
+
+        } catch (error) {
+
+          return Promise.reject(error);
+        }
+      });
+
       export const addFriendAction = createAsyncThunk<{userId: string; friendId: string}, ChangeFriendDto, {
         dispatch: AppDispatch;
         state: State;
@@ -233,6 +259,17 @@ export const logoutAction = createAsyncThunk<void, undefined, {
            });
 
   //сервис тренировок
+
+  export const createWorkoutAction = createAsyncThunk<Workout, CreateWorkoutDto, {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+   }>(
+     'workouts/create',
+     async ( CreateWorkoutDto, { dispatch, extra: api }) => {
+       const { data } = await api.patch<Workout>(`${APIRoute.Workouts}/create`, CreateWorkoutDto);
+       return data;
+     });
 
   export const fetchWorkoutCatalogAction = createAsyncThunk<Workout[], WorkoutCatalogQuery | undefined, {
     dispatch: AppDispatch;
@@ -311,7 +348,7 @@ export const logoutAction = createAsyncThunk<void, undefined, {
      async ( UpdateWorkoutDto, { dispatch, extra: api }) => {
        const { id } = UpdateWorkoutDto;
        delete UpdateWorkoutDto.id;
-       const { data } = await api.patch<Workout>(`${APIRoute.Users}/${id}`, UpdateWorkoutDto);
+       const { data } = await api.patch<Workout>(`${APIRoute.Workouts}/${id}`, UpdateWorkoutDto);
        return data;
      });
 
@@ -359,6 +396,27 @@ export const postOrderAction = createAsyncThunk<
         return data;
       },
     );
+
+    export const fetchCoachOrdersAction = createAsyncThunk<Order[], OrderQuery | undefined, {
+      dispatch: AppDispatch;
+      state: State;
+      extra: AxiosInstance; }>(
+        'orders/coach',
+        async (query, {extra: api}) => {
+          try {
+            const limit = query && query.limit ? `limit=${query.limit}&` : `limit=${DEFAULT_QUERY_LIMIT}&`;
+            const sortDirection = query && query.sortDirection ? `sortDirection=${query.sortDirection}&` : `limit=${DEFAULT_SORT_DIRECTION}&`;
+            const page = query && query.page ? `page=${query.page}&` : 'page=1&';
+            const id = query && query.coachId ? query.coachId : '';
+      
+            const {data} = await api.get<Order[]>(`${APIRoute.Orders}/coach/${id}?${limit}${sortDirection}${page}`);
+            return data;
+  
+          } catch (error) {
+  
+            return Promise.reject(error);
+          }
+        });
 
 
 // запросы на персональную тренировку

@@ -15,3 +15,5 @@ export const getUserOther = (state: State): UserFull | null => state[NameSpace.U
 export const getUserLoadingStatus = (state: State): boolean => state[NameSpace.User].userData.isLoading;
 export const getUsers = (state: State): UserFull[] => state[NameSpace.User].userData.users;
 export const getUserCatalogLoading = (state: State): boolean => state[NameSpace.User].userData.isUserCatalogLoading;
+export const getFriends = (state: State): UserFull[] => state[NameSpace.User].userData.friends;
+export const getFriendsListLoading = (state: State): boolean => state[NameSpace.User].userData.isFriendsListLoading;

@@ -1,14 +1,8 @@
 import { ChangeEvent, useEffect, useState } from "react";
-import {
-  DescriptionLength,
-  MAX_TITLE_LENGTH,
-  MIN_TITLE_LENGTH,
-  UserRole,
-  WorkoutGender,
-} from "../../constant";
-import { useAppDispatch, useAppSelector } from "../../hooks";
+import { DescriptionLength, MAX_TITLE_LENGTH, MIN_TITLE_LENGTH, UserRole, WorkoutGender } from "../../constant";
+import { useAppDispatch } from "../../hooks";
 import { Workout } from "../../types/workout";
-import { fetchUserAction, updateWorkoutAction } from "../../store/api-action";
+import { updateWorkoutAction } from "../../store/api-action";
 import { UserFull } from "../../types/user-full";
 import PopupWindow from "../popup-window/popup-window";
 import CreateOrder from "../create-order/create-order";
@@ -17,17 +11,6 @@ type Props = {
   workout: Workout;
   user: UserFull;
 };
-enum FormFieldName {
-  nameTraining = "nameTraining",
-  levelTraining = "levelTraining",
-  trainingType = "trainingType",
-  trainingTime = "trainingTime",
-  price = "price",
-  caloriesReset = "caloriesReset",
-  descriptionTraining = "descriptionTraining",
-  videoTraning = "videoTraning",
-  isSpecialOffer = "isSpecialoffer",
-}
 
 const EditWorkoutForm = ({ workout, user }: Props): JSX.Element => {
   const dispatch = useAppDispatch();

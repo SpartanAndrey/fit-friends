@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useAppDispatch, useAppSelector } from '../../hooks';
 import { validatePassword } from '../../utils/utils';
-import { AppRoute, GENDERS, LOCATIONS, TEXT_ROLES, UserGender, UserLocation, UserRole, UserRoleText } from '../../constant';
+import { AppRoute, GENDERS, LOCATIONS, NameLength, TEXT_ROLES, UserGender, UserLocation, UserRole, UserRoleText } from '../../constant';
 import { useNavigate } from 'react-router-dom';
 import { RegisteredUserData } from '../../types/registered-user-data';
 import { getEmailExistenceCheck } from '../../store/user-process/user-selectors';
@@ -168,8 +168,8 @@ function RegisterPage(): JSX.Element {
                           onChange={fieldChangeHandle}
                           name='name'
                           type='text'
-                          minLength={1}
-                          maxLength={15}
+                          minLength={NameLength.MinLength}
+                          maxLength={NameLength.MaxLength}
                           pattern='^[A-Za-zА-Яа-яЁё\s]+$'
                           title='Только буквы русского/английского алфавита'
                           required

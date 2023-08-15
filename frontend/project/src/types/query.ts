@@ -1,6 +1,7 @@
 import { SortDirection, SortType, UserLevel, UserLocation, UserRole, WorkoutTime, WorkoutType } from "../constant";
 
 export type UserQuery = {
+  userId?: string;
   limit?: number;
   sortDirection?: SortDirection;
   sortType?: SortType;
@@ -42,4 +43,9 @@ export type WorkoutListQuery = {
   coachId?: string;
 }
 
-
+export type OrderQuery = {
+  coachId?: string;
+  limit?: number;
+  sortDirection?: SortDirection;
+  page?: number;
+}

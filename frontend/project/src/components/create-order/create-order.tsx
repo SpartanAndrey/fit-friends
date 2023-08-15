@@ -32,7 +32,8 @@ const CreateOrder = ({workout, handleClose}: Prop): JSX.Element => {
   };
 
   const [isDone, setIsDone] = useState(false);
-  const handleCreateOrder = () => {
+
+  const createOrderHandle = () => {
     if (paymentType) {
       const data = {
         workoutId: workout.id,
@@ -160,7 +161,7 @@ const CreateOrder = ({workout, handleClose}: Prop): JSX.Element => {
           <button
             className="btn"
             type="button"
-            onClick={handleCreateOrder}
+            onClick={createOrderHandle}
             disabled={isDone}
           >Купить
           </button>

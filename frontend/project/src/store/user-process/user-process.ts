@@ -1,7 +1,7 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { NameSpace, AuthorizationStatus } from '../../constant';
 import { UserProcess } from '../../types/state';
-import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction, fetchUserAction, fetchUserSimpleAction, fetchUserOtherAction } from '../api-action';
+import { checkAuthAction, loginAction, logoutAction, checkEmail, registerCoachAction, registerUserAction, fetchUserCoachAction, fetchUserCatalogAction, fetchUserAction, fetchUserSimpleAction, fetchUserOtherAction, fetchUserFriendsAction } from '../api-action';
 
 const initialState: UserProcess = {
   userData: {
@@ -15,6 +15,8 @@ const initialState: UserProcess = {
     isLoading: false,
     isUserCatalogLoading: false,
     users: [],
+    friends: [],
+    isFriendsListLoading: false,
   }
 };
 
@@ -98,7 +100,16 @@ export const userProcess = createSlice({
       })
       .addCase(fetchUserCatalogAction.rejected, (state) => {
         state.userData.isUserCatalogLoading = false;
+      })
+      .addCase(fetchUserFriendsAction.pending, (state) => {
+        state.userData.isFriendsListLoading = true;
+      })
+      .addCase(fetchUserFriendsAction.fulfilled, (state, action) => {
+        state.userData.friends = action.payload;
+        state.userData.isFriendsListLoading = false;
+      })
+      .addCase(fetchUserFriendsAction.rejected, (state) => {
+        state.userData.isFriendsListLoading = false;
       });
   }
 });
-

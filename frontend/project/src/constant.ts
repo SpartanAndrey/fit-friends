@@ -8,6 +8,7 @@ export enum AppRoute {
   QuestionnaireCoach = '/questionnaire-coach',
   QuestionnaireUser = '/questionnaire-user',
   PersonalAccountCoach = '/coach-personal-account',
+  PersonalAccountUser = '/user-personal-account',
   WorkoutsCatalog = '/workouts-catalog',
   UsersCatalog = '/users-catalog',
   Users = '/users',
@@ -117,6 +118,8 @@ export enum WorkoutGender {
   Women = 'Women',
   Everybody = 'Everybody',
 }
+
+export const WORKOUT_GENDERS: string[] = Object.values(WorkoutGender);
 
 export enum SortType {
   CreatedAt = 'createdAt',

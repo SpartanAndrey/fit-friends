@@ -19,6 +19,8 @@ export type UserProcess = {
     isLoading: boolean;
     isUserCatalogLoading: boolean;
     users: UserFull[];
+    friends: UserFull[];
+    isFriendsListLoading: boolean;
   }
 };
 
