@@ -17,7 +17,7 @@ function ForUserWorkoutSlider({currentCard, workouts, visibleCards}: Props): JSX
       visibleSlides={visibleCards}
       slides={workouts.map((workout: Workout) => <ForUserWorkoutSlide key={workout.id} workout={workout} />)}
     />
-  )
+  );
 }
 
 export default ForUserWorkoutSlider;

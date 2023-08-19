@@ -1,4 +1,4 @@
-import { Workout } from "../../types/workout"
+import { Workout } from '../../types/workout';
 
 type Props = {
   workout: Workout;
@@ -21,7 +21,7 @@ function ForUserWorkoutSlide({workout}: Props): JSX.Element {
         </div>
       </div>
     </li>
-  )
+  );
 }
 
 export default ForUserWorkoutSlide;

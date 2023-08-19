@@ -12,6 +12,7 @@ export enum AppRoute {
   WorkoutsCatalog = '/workouts-catalog',
   UsersCatalog = '/users-catalog',
   Users = '/users',
+  WorkoutCard = '/workouts/:id',
   UserCard = '/users/:id',
   NotFound ='*',
   Upload = 'files/upload'

@@ -1,11 +1,11 @@
-import { ChangeEvent, useEffect, useState } from "react";
-import { DescriptionLength, MAX_TITLE_LENGTH, MIN_TITLE_LENGTH, UserRole, WorkoutGender } from "../../constant";
-import { useAppDispatch } from "../../hooks";
-import { Workout } from "../../types/workout";
-import { updateWorkoutAction } from "../../store/api-action";
-import { UserFull } from "../../types/user-full";
-import PopupWindow from "../popup-window/popup-window";
-import CreateOrder from "../create-order/create-order";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { DescriptionLength, MAX_TITLE_LENGTH, MIN_TITLE_LENGTH, UserRole, WorkoutGender } from '../../constant';
+import { useAppDispatch } from '../../hooks';
+import { Workout } from '../../types/workout';
+import { updateWorkoutAction } from '../../store/api-action';
+import { UserFull } from '../../types/user-full';
+import PopupWindow from '../popup-window/popup-window';
+import CreateOrder from '../create-order/create-order';
 
 type Props = {
   workout: Workout;
@@ -162,7 +162,8 @@ const EditWorkoutForm = ({ workout, user }: Props): JSX.Element => {
                         disabled={!isEdit}
                         value={editData.description}
                         onChange={fieldChangeHandle}
-                      ></textarea>
+                      >
+                      </textarea>
                       {isNotCorrectLength && (
                         <span className="custom-textarea__error">
                           Минимальная длина 10 символ. Максимальная длина 140
@@ -200,10 +201,10 @@ const EditWorkoutForm = ({ workout, user }: Props): JSX.Element => {
                     <div className="hashtag hashtag--white">
                       <span>
                         {workout.gender === WorkoutGender.Women &&
-                          "#для_женщин"}
-                        {workout.gender === WorkoutGender.Men && "#для_мужчин"}
+                          '#для_женщин'}
+                        {workout.gender === WorkoutGender.Men && '#для_мужчин'}
                         {workout.gender === WorkoutGender.Everybody &&
-                          "#для_всех"}
+                          '#для_всех'}
                       </span>
                     </div>
                   </li>
@@ -276,7 +277,7 @@ const EditWorkoutForm = ({ workout, user }: Props): JSX.Element => {
                       <use xlinkHref="#icon-discount"></use>
                     </svg>
                     <span>
-                      {isDiscount ? "Отменить скидку" : "Сделать скидку 10%"}
+                      {isDiscount ? 'Отменить скидку' : 'Сделать скидку 10%'}
                     </span>
                   </button>
                 )}

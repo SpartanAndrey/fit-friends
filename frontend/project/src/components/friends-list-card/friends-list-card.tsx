@@ -1,5 +1,4 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppDispatch } from '../../hooks';
 import { UserFull } from '../../types/user-full';
 import { UserRole, AppRoute } from '../../constant';
 
@@ -8,7 +7,7 @@ type Props = {
 }
 
 const FriendsListCard = ({ user }: Props): JSX.Element => {
-  
+
   const isCoach = user.role === UserRole.Coach;
 
   const navigate = useNavigate();
@@ -40,14 +39,14 @@ const FriendsListCard = ({ user }: Props): JSX.Element => {
           </div>
         </div>
         <ul className="thumbnail-friend__training-types-list">
-          {user.workoutType&& user.workoutType.map((el)=>
+          {user.workoutType && user.workoutType.map((el)=>
             (
               <li key={el}>
                 <div className="hashtag thumbnail-friend__hashtag"><span>#{el}</span></div>
               </li>)
           )}
         </ul>
-        {user.isReadyToTrain ||  user.isReadyToCoach &&
+        {user.isReadyToTrain || user.isReadyToCoach &&
         <div className="thumbnail-friend__activity-bar">
           <div className="thumbnail-friend__ready-status thumbnail-friend__ready-status--is-ready"><span>Готов к&nbsp;тренировке</span>
           </div>
@@ -71,7 +70,7 @@ const FriendsListCard = ({ user }: Props): JSX.Element => {
             </button>
           </div>
         </div>}
-        {!isCoach &&
+      {!isCoach &&
         <div className="thumbnail-friend__request-status thumbnail-friend__request-status--role-user">
           <p className="thumbnail-friend__request-text">
             Запрос на&nbsp;совместную тренировку

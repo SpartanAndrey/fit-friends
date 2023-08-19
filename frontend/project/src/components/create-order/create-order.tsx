@@ -1,7 +1,8 @@
 import { useState } from 'react';
 import { Workout } from '../../types/workout';
 import { useAppDispatch } from '../../hooks';
-import { DEFAULT_ORDER_NUMBER, PAYMENT_TYPES, PaymentType } from '../../constant';
+import { DEFAULT_ORDER_NUMBER, OrderType, PAYMENT_TYPES, PaymentType } from '../../constant';
+import { postOrderAction } from '../../store/api-action';
 
 type Prop ={
   handleClose?: () => void;
@@ -33,14 +34,17 @@ const CreateOrder = ({workout, handleClose}: Prop): JSX.Element => {
 
   const [isDone, setIsDone] = useState(false);
 
-  const createOrderHandle = () => {
-    if (paymentType) {
+  const createOrderHandle = (evt: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+    evt.preventDefault();
+    if (paymentType && workout.id) {
       const data = {
         workoutId: workout.id,
         quantity: workoutNumber,
-        paymentType: paymentType
+        paymentType: paymentType,
+        coachId: workout.coachId,
+        orderType: OrderType.Workout,
       };
-      dispatch(ppostOrderAction(data));
+      dispatch(postOrderAction(data));
       setIsDone(true);
     }
     if(!paymentType) {
@@ -171,7 +175,3 @@ const CreateOrder = ({workout, handleClose}: Prop): JSX.Element => {
   );
 };
 export default CreateOrder;
-function ppostOrderAction(data: { workoutId: number | undefined; quantity: number; paymentType: PaymentType; }): any {
-    throw new Error('Function not implemented.');
-}
-

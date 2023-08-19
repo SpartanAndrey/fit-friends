@@ -1,4 +1,4 @@
-import { UserFull } from "../../types/user-full";
+import { UserFull } from '../../types/user-full';
 
 type Props = {
   user: UserFull;
@@ -29,18 +29,20 @@ function LookForCompanySlide({user}: Props): JSX.Element {
           </div>
         </div>
         <ul className="thumbnail-user__hashtags-list">
-          {user.workoutType.map((type) => 
-            <li className="thumbnail-user__hashtags-item">
-              <div className="hashtag thumbnail-user__hashtag">
-              <span>#{type}</span></div>
-            </li>
+          {user.workoutType.map((type) =>
+            (
+              <li className="thumbnail-user__hashtags-item" key={type}>
+                <div className="hashtag thumbnail-user__hashtag">
+                  <span>#{type}</span>
+                </div>
+              </li>
+            )
           )}
-
         </ul>
         <a className="btn btn--outlined btn--dark-bg btn--medium thumbnail-user__button" href="#">Подробнее</a>
       </div>
     </li>
-  )
+  );
 }
 
 export default LookForCompanySlide;

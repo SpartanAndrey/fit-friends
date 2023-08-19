@@ -1,26 +1,15 @@
-import { ChangeEvent, useEffect, useRef, useState } from "react";
-import { AppRoute, DescriptionLength, LEVELS, MAX_CALORIES_NUMBER, MAX_TITLE_LENGTH, MIN_CALORIES_NUMBER, MIN_TITLE_LENGTH, NameLength, UserLevel, UserRole, WORKOUT_GENDERS, WORKOUT_TIMES, WORKOUT_TYPES, WorkoutGender, WorkoutTime, WorkoutType } from "../../constant";
-import { useAppDispatch, useAppSelector } from "../../hooks";
-import { Workout } from "../../types/workout";
-import { createWorkoutAction, fetchUserAction, updateWorkoutAction } from "../../store/api-action";
-import { UserFull } from "../../types/user-full";
-import PopupWindow from "../popup-window/popup-window";
-import CreateOrder from "../create-order/create-order";
-import { UserCoach } from "../../types/user-coach";
-import { getUserCoach } from "../../store/user-process/user-selectors";
-import NotFoundPage from "../../pages/not-found-page/not-found-page";
-import { redirectToRoute } from "../../store/action";
-import Header from "../header/header";
+import { ChangeEvent, useEffect, useState } from 'react';
+import { AppRoute, DescriptionLength, LEVELS, MAX_CALORIES_NUMBER, MAX_TITLE_LENGTH, MIN_CALORIES_NUMBER, MIN_TITLE_LENGTH, UserLevel, WORKOUT_GENDERS, WORKOUT_TIMES, WORKOUT_TYPES, WorkoutGender, WorkoutTime, WorkoutType } from '../../constant';
+import { useAppDispatch, useAppSelector } from '../../hooks';
+import { createWorkoutAction } from '../../store/api-action';
+import { getUserCoach } from '../../store/user-process/user-selectors';
+import NotFoundPage from '../../pages/not-found-page/not-found-page';
+import { redirectToRoute } from '../../store/action';
+import Header from '../header/header';
 
 const CreateWorkoutForm = (): JSX.Element => {
   const dispatch = useAppDispatch();
   const coach = useAppSelector(getUserCoach);
-
-  if (!coach) {
-    return <NotFoundPage />;
-  }
-
-  const isCoach = coach.role === UserRole.Coach;
 
   const [editData, setEditData] = useState({
     title: '',
@@ -28,6 +17,28 @@ const CreateWorkoutForm = (): JSX.Element => {
     price: 0,
     caloriesNumber: 0,
   });
+  const [isOpened, setIsOpened] = useState<boolean>(false);
+  const [currentType, setCurrentType] = useState(WorkoutType.Aerobics);
+  const [currentTime, setCurrentTime] = useState(WorkoutTime.Short);
+  const [currentLevel, setCurrentLevel] = useState(UserLevel.Beginner);
+  const [currentGender, setGender] = useState(WorkoutGender.Everybody);
+  const [isNotCorrectLength, setSignCorrectLength] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (
+      editData.description &&
+      (editData.description.length < DescriptionLength.MinLength ||
+        editData.description.length > DescriptionLength.MaxLength)
+    ) {
+      setSignCorrectLength(true);
+    } else {
+      setSignCorrectLength(false);
+    }
+  }, [editData.description]);
+
+  if (!coach) {
+    return <NotFoundPage />;
+  }
 
   const fieldChangeHandle = (
     evt: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | null>
@@ -36,13 +47,9 @@ const CreateWorkoutForm = (): JSX.Element => {
     setEditData({ ...editData, [name]: value });
   };
 
-  const [isOpened, setIsOpened] = useState<boolean>(false);
-
   const toggleButtonClickHandle = () => {
     setIsOpened((prevIsOpened) => !prevIsOpened);
   };
-
-  const [currentType, setCurrentType] = useState(WorkoutType.Aerobics);
 
   const typeChangeHandle = (evt: React.MouseEvent<HTMLLIElement>) => {
     setCurrentType(evt.currentTarget.innerText as WorkoutType);
@@ -50,23 +57,17 @@ const CreateWorkoutForm = (): JSX.Element => {
     setIsOpened(false);
   };
 
-  const [currentTime, setCurrentTime] = useState(WorkoutTime.Short);
-
   const timeChangeHandle = (evt: React.MouseEvent<HTMLLIElement>) => {
     setCurrentTime(evt.currentTarget.innerText as WorkoutTime);
     evt.currentTarget.setAttribute('aria-selected', 'true');
     setIsOpened(false);
   };
 
-  const [currentLevel, setCurrentLevel] = useState(UserLevel.Beginner);
-
   const levelChangeHandle = (evt: React.MouseEvent<HTMLLIElement>) => {
     setCurrentLevel(evt.currentTarget.innerText as UserLevel);
     evt.currentTarget.setAttribute('aria-selected', 'true');
     setIsOpened(false);
   };
-
-  const [currentGender, setGender] = useState(WorkoutGender.Everybody);
 
   const genderChangeHandle = (evt: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const {value} = evt.target;
@@ -94,20 +95,6 @@ const CreateWorkoutForm = (): JSX.Element => {
     dispatch(redirectToRoute(AppRoute.PersonalAccountCoach));
   };
 
-  const [isNotCorrectLength, setSignCorrectLength] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (
-      editData.description &&
-      (editData.description.length < DescriptionLength.MinLength ||
-        editData.description.length > DescriptionLength.MaxLength)
-    ) {
-      setSignCorrectLength(true);
-    } else {
-      setSignCorrectLength(false);
-    }
-  }, [editData.description]);
-
   return (
     <div className="wrapper">
       <Header />
@@ -133,8 +120,8 @@ const CreateWorkoutForm = (): JSX.Element => {
                                 onChange={fieldChangeHandle}
                                 name="title"
                                 type="text"
-                                minLength={NameLength.MinLength}
-                                maxLength={NameLength.MaxLength}
+                                minLength={MIN_TITLE_LENGTH}
+                                maxLength={MAX_TITLE_LENGTH}
                                 value={editData.title}
                                 pattern="^[A-Za-zА-Яа-яЁё\s]+$"
                                 title="Только буквы русского/английского алфавита"
@@ -334,7 +321,8 @@ const CreateWorkoutForm = (): JSX.Element => {
                               placeholder=" "
                               value={editData.description}
                               onChange={fieldChangeHandle}
-                            ></textarea>
+                            >
+                            </textarea>
                             {isNotCorrectLength && (
                               <span className="custom-textarea__error">
                                 Минимальная длина 10 символ. Максимальная длина

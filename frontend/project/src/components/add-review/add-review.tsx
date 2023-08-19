@@ -9,7 +9,7 @@ type Props ={
   userId: string;
 }
 
-const addReview = ({workoutId, userId, handleClose}: Props): JSX.Element => {
+const AddReview = ({workoutId, userId, handleClose}: Props): JSX.Element => {
   const dispatch = useAppDispatch();
 
   const [currentRating, setCurrentRating] = useState(MAX_RATING_NUMBER);
@@ -60,7 +60,6 @@ const addReview = ({workoutId, userId, handleClose}: Props): JSX.Element => {
     }
   },[dispatch, handleClose, isDone, workoutId]
   );
-  
 
   return (
     <section className="popup">
@@ -124,4 +123,4 @@ const addReview = ({workoutId, userId, handleClose}: Props): JSX.Element => {
     </section>
   );
 };
-export default addReview;
+export default AddReview;

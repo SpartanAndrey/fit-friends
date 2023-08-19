@@ -16,13 +16,13 @@ function ForUserWorkouts({workouts}: Props): JSX.Element {
     if (currentCard > 0) {
       setCurrentCard(currentCard - 1);
     }
-  }
+  };
 
   const buttonNextClickHandle = () => {
     if (currentCard < workouts.length - DEFAULT_VISIBLE_SLIDES) {
       setCurrentCard(currentCard + 1);
     }
-  }
+  };
 
   return(
     <section className="special-for-you">
@@ -45,14 +45,13 @@ function ForUserWorkouts({workouts}: Props): JSX.Element {
           </div>
           <ul className="special-for-you__list">
             {workouts.length > 0
-            ? <ForUserWorkoutSlider currentCard={currentCard} workouts={workouts} visibleCards={DEFAULT_VISIBLE_SLIDES} /> 
-            :  <div>Скоро и для Вас тренировки найдутся</div>
-            }            
+              ? <ForUserWorkoutSlider currentCard={currentCard} workouts={workouts} visibleCards={DEFAULT_VISIBLE_SLIDES} />
+              : <div>Скоро и для Вас тренировки найдутся</div> }
           </ul>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default ForUserWorkouts;

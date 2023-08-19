@@ -1,9 +1,9 @@
-import { useState } from "react";
-import { useAppDispatch } from "../../hooks";
-import { UserFull } from "../../types/user-full";
-import { redirectToRoute } from "../../store/action";
-import { AppRoute } from "../../constant";
-import LookForCompanySlider from "./look-for-company-slider";
+import { useState } from 'react';
+import { useAppDispatch } from '../../hooks';
+import { UserFull } from '../../types/user-full';
+import { redirectToRoute } from '../../store/action';
+import { AppRoute } from '../../constant';
+import LookForCompanySlider from './look-for-company-slider';
 
 type Props = {
   users: UserFull[];
@@ -13,24 +13,24 @@ const DEFAULT_VISIBLE_SLIDES = 4;
 
 function LookForCompany({users}: Props): JSX.Element {
   const dispatch = useAppDispatch();
-  
+
   const [currentCard, setCurrentCard] = useState(0);
 
   const buttonBackClickHandle = () => {
     if (currentCard > 0) {
       setCurrentCard(currentCard - 1);
     }
-  }
+  };
 
   const buttonNextClickHandle = () => {
     if (currentCard < users.length - DEFAULT_VISIBLE_SLIDES) {
       setCurrentCard(currentCard + 1);
     }
-  }
+  };
 
   const buttonViewAllHandle = () => {
     dispatch(redirectToRoute(AppRoute.UsersCatalog));
-  }
+  };
 
   return(
     <section className="look-for-company">
@@ -62,7 +62,7 @@ function LookForCompany({users}: Props): JSX.Element {
         </div>
       </div>
     </section>
-  )
+  );
 }
 
 export default LookForCompany;

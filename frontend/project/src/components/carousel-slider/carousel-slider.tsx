@@ -19,10 +19,10 @@ function CarouselSlider({slides, currentSlide, visibleSlides, naturalSlideHeight
       visibleSlides={visibleSlides}
       currentSlide={currentSlide}
       isIntrinsicHeight={isIntrinsicHeight}
-    >     
+    >
       <Slider>
         {slides.map((slide, index) => (
-          <Slide key={index} index={index}>{slide}</Slide>
+          <Slide key={slide.key} index={index}>{slide}</Slide>
         ))}
       </Slider>
     </CarouselProvider>
