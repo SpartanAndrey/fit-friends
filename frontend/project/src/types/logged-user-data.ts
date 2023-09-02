@@ -1,5 +1,5 @@
 export type LoggedUserData = {
-  id: number;
+  id: string;
   email: string;
   role: string;
   accessToken: string;
