@@ -16,7 +16,8 @@
         "tsConfig": "apps/workouts/tsconfig.app.json",
         "assets": ["apps/workouts/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/workouts/webpack.config.js"
+        "webpackConfig": "apps/workouts/webpack.config.js",
+        "generatePackageJson": true
       },
       "configurations": {
         "development": {},
@@ -92,6 +93,15 @@
       "options": {
         "command": "ts-node --compiler-options {\\\"module\\\":\\\"CommonJS\\\"} seed.ts",
         "cwd": "libs/models/workouts-models/src/prisma"
+      }
+    },
+    "buildImage": {
+      "executor": "nx: run-commands",
+      "options": {
+        "commands": [
+          "nx run users: build",
+          "docker build --file ./apps/users/Dockerfile --tag fitfriends.users.latest"
+        ]
       }
     }
   },

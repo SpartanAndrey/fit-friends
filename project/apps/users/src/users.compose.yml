@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  fitfriends.users.mongo:
+    image: mongo:latest
+    restart: always
+    container_name: fitfriends.users.mongo
+    env_file:
+      - fitfriends.users.mongo.env
+    volumes:
+      - fitfriends.users.volume:/data/db
+    networks:
+      - fitfriends.users.network
+
+  fitfriends.users:
+    container_name: fitfriends.users
+    depends_on:
+       - fitfriends.users.mongo
+    restart: always
+    image: fitfriends.users:latest
+    env_file:
+      - fitfriends.users.env
+    ports:
+      - 3000:3000
+    networks:
+      - fitfriends.users.network
+      
+networks:
+  fitfriends.users.network:
+    driver: bridge
+
+volumes:
+  fitfriends.users.volume:
